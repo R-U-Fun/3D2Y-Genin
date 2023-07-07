@@ -72,52 +72,45 @@
                             &nbsp;&nbsp;&nbsp;
                             <a href="index.php"  style={{cursor:'default'}}><img src="https://as2.ftcdn.net/v2/jpg/03/60/12/53/1000_F_360125377_mVkIhqTKfQN6p6SEEwXC3DvbVEZ9YCYA.jpg" id="AaroophanIMG" height="35px" width="35px" className="rounded-5" /></a> 
                             &nbsp;&nbsp;&nbsp;
-                            <a className="navbar-brand fw-bold font-arial" id="PageNameA" href="index.php" style={{ cursor:'default', color:'rgba(210, 230, 250, 0.9)'  }}>ML</a>
+                            <a className="navbar-brand fw-bold font-arial" id="PageNameA" href="index.php" style={{ cursor:'default', color:'rgba(210, 230, 250, 0.9)' }}>ML</a>
                             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="true" aria-label="Toggle">
                                 <span className="navbar-toggler-icon"></span>
                             </button>
                             &nbsp;&nbsp;&nbsp;
-                            <div className="collapse navbar-collapse" id="navbarNav">
+                            <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
                                 <ul className="navbar-nav">
                                     <li className="nav-item">
-                                        <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}>Home</a>
+                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}>Home</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}>Profile</a>
+                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}>Profile</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}>Movies</a>
+                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}>Movies</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}>Series</a>
+                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}>Series</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}>Anime</a>
+                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}>Anime</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}>Search</a>
+                                        <a className="nav-link p-2 mx-3" style={{ cursor:'default', color:'rgba(210, 230, 250, 0)' }}>Aaroophan-3D2Y-Genin</a>
                                     </li>
                                     <li className="nav-item">
-                                        <input class="nav-link p-2 form-control" type="search" placeholder="Search" />
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="collapse navbar-collapse" id="navbarNav"><h2><i className="bi bi-view-list" style={{ cursor:'default', color: 'rgba(0, 0, 0, 0)' }}></i></h2></div>
-                            <div className="collapse navbar-collapse" id="navbarNav"><h2><i className="bi bi-view-list" style={{ cursor:'default', color: 'rgba(0, 0, 0, 0)' }}></i></h2></div>
-                            <div className="collapse navbar-collapse" id="navbarNav"><h2><i className="bi bi-view-list" style={{ cursor:'default', color: 'rgba(0, 0, 0, 0)' }}></i></h2></div>
-                            <div className="collapse navbar-collapse" id="navbarNav">
-                                <ul className="navbar-nav">
-                                    <li className="nav-item">
-                                        <input class="nav-link p-2 form-control" type="search" placeholder="Search" />
+                                        <input className="nav-link p-2 mx-1 form-control" type="search" placeholder="Search" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)' }}/>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}><h2><i className="bi bi-view-list mx-3"></i></h2></a>
+                                        <a className="nav-link p-2 mx-5" href="index.php" style={{ cursor:'default'}}>Log In</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}><h2><i className="bi bi-person mx-3"></i></h2></a>
+                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default'}}><i className="bi bi-person mx-3"></i></a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}><h2><i className="bi bi-brightness-high mx-3"></i></h2></a>
+                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}><i className="bi bi-view-list mx-3"></i></a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}><i className="bi bi-brightness-high mx-3"></i></a>
                                     </li>
                                 </ul>
                             </div>
@@ -152,7 +145,36 @@
     <div id="AppHere"></div>
     
         <script type="text/babel">
-            function HomeObjs({Linke, Icone}){
+            function HomeObjs({Name, Linke, Icone}){
+                return(
+                    <div className="col-sm-4 col-lg-4 rounded-4" id="box" onClick={MoviePageCall}>
+                        <div className="card my-4 text-white" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none'}}>
+                            <h1 style={{ fontsize: '60px', color: '#003475'}}><i className={`bi bi-${Icone}`}></i></h1>
+                            <div className="card-body" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none' }}>
+                                <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: '#003475'}}>{Linke}</h5>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            function HomePage(){
+                return(
+                    <div>
+                        <div id="HomeName"><a><b>M</b>L</a></div>
+
+                        <div className="container my-4 text-center">
+                            <div className="row col-lg-12 col-xs-1 gx-3 text-center">
+                                <HomeObjs Name='Movies' Linke='Movies' Icone='film' />
+                                <HomeObjs Name='Series' Linke='Series' Icone='tv' />
+                                <HomeObjs Name='Anime' Linke='Anime'  Icone='sunglasses' />
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            ReactDOM.render(<HomePage/> , document.getElementById("AppHere"));
+
+            function MovieObjs({Linke, Icone}){
                 return(
                     <div className="col-sm-4 col-lg-4 rounded-4" id="box">
                         <div className="card my-4 text-white" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none'}}>
@@ -164,24 +186,25 @@
                     </div>
                 );
             }
-            
-            function HomePage(){
+            function MoviePage(){
                 return(
                     <div>
-                        <div id="HomeName"><a><b>M</b>L</a></div>
+                        <div id="HomeName"><a><b>Movie</b>List</a></div>
 
                         <div className="container my-4 text-center">
                             <div className="row col-lg-12 col-xs-1 gx-3 text-center">
 
-                                <HomeObjs Linke='Movies' Icone='film' />
-                                <HomeObjs Linke='Series' Icone='tv' />
-                                <HomeObjs Linke='Anime'  Icone='sunglasses' />
+                                <MovieObjs Linke='Movie1' Icone='film' />
+                                <MovieObjs Linke='Movie2' Icone='tv' />
+                                <MovieObjs Linke='Movie3' Icone='film' />
                             </div>
                         </div>
                     </div>
                 );
             }
-            ReactDOM.render(<HomePage/> , document.getElementById("AppHere"));
+            function MoviePageCall(){
+                ReactDOM.render(<MoviePage/> , document.getElementById("AppHere"));
+            }
         </script>
 
         <style>
@@ -191,7 +214,7 @@
                 margin: auto;
                 padding: 20px 0;
                 text-align: center;
-                font-size: 100px;
+                font-size: 50px;
                 font-family: 'Lato', sans-serif;
                 letter-spacing: 2px;
             }
@@ -205,7 +228,7 @@
             }
             #HomeName a:hover
             {
-                font-size: 150px;
+                font-size: 75px;
                 letter-spacing: 20px;
             }
             #box 
@@ -221,6 +244,7 @@
 
 </div>
 
+<br/><br/>
     <div id="FooterHere"></div>
     <script type="text/babel">
         function Footer(){
