@@ -23,9 +23,43 @@
             
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <title>ML</title>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyAtsBOvr0h9cgd99lPVmJbgg3-YChMv8So",
+            authDomain: "d2y-genin.firebaseapp.com",
+            projectId: "d2y-genin",
+            storageBucket: "d2y-genin.appspot.com",
+            messagingSenderId: "208345580649",
+            appId: "1:208345580649:web:aa56944f791ed602d60ef8",
+            measurementId: "G-6N502447HW"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+
+        function getMovies() {
+            const MovieCol = collection(db, 'users');
+            const MovieSnapshot = await getDocs(usersCol);
+            const MovieList = userSnapshot.docs.map(doc => doc.data());
+            return (<h1>{MovieList}</h1>);
+        }
+        
+        ReactDOM.render(<getMovies/> , document.getElementById("FirebaseCheck"));
+    </script>
 </head>
 <body>
 
+        <br><br><div id="FirebaseCheck">aaa</div>
     
         <script type="text/babel">
             function Secret(){
@@ -89,7 +123,6 @@
                                 <img src="https://img.yts.mx/assets/images/movies/guardians_of_the_galaxy_vol_3_2023/medium-cover.jpg" className="card-img-top rounded-4" alt="BaratieBakery" style={{ border: 'none'}} />
                                 <div className="card-body" style={{ border: 'none' }}>
                                     <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)'}}>{Linke}</h5>
-                                    <p className="card-text" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)' }}>This is this website itself. I developed this to hone my skills.</p>
                                     <p className="card-text fs-6 mb-2" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)' }}><small>{Icone}</small></p>
                                 </div>
                             </a>
@@ -105,7 +138,7 @@
                         <div className="container my-4 text-center">
                             <div className="row col-lg-12 col-xs-1 gx-3 text-center">
 
-                                <MovieObjs Linke='Guardians of The Galaxy Vol. 3' Icone='film' />
+                                <MovieObjs Linke='Guardians of The Galaxy Vol. 3' Icone='2023' />
                                 <MovieObjs Linke='Movie2' Icone='tv' />
                                 <MovieObjs Linke='Movie3' Icone='film' />
                                 <MovieObjs Linke='Movie3' Icone='film' />
@@ -160,13 +193,13 @@
                                         <a className="nav-link p-2 mx-3" onClick={HomePageCall} style={{ cursor:'default' }}>Home</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}>Movies</a>
+                                        <a className="nav-link p-2 mx-3" onClick={MoviePageCall} style={{ cursor:'default' }}>Movies</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}>Series</a>
+                                        <a className="nav-link p-2 mx-3"   style={{ cursor:'default' }}>Series</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}>Anime</a>
+                                        <a className="nav-link p-2 mx-3"   style={{ cursor:'default' }}>Anime</a>
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link p-2 mx-3" style={{ cursor:'default', color:'rgba(210, 230, 250, 0)' }}>Aaroophan-3D2Y-Genin</a>
@@ -175,13 +208,13 @@
                                         <input className="nav-link p-2 mx-1 form-control" type="search" placeholder="Search" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)' }}/>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default'}}>Log In<i className="bi bi-person mx-3"></i></a>
+                                        <a className="nav-link p-2 mx-3"   style={{ cursor:'default'}}>Log In<i className="bi bi-person mx-3"></i></a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}><i className="bi bi-view-list mx-3"></i></a>
+                                        <a className="nav-link p-2 mx-3"   style={{ cursor:'default' }}><i className="bi bi-view-list mx-3"></i></a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}><i className="bi bi-brightness-high mx-3"></i></a>
+                                        <a className="nav-link p-2 mx-3"   style={{ cursor:'default' }}><i className="bi bi-brightness-high mx-3"></i></a>
                                     </li>
                                 </ul>
                             </div>
@@ -190,6 +223,7 @@
                 );
             }
             ReactDOM.render(<Header/> , document.getElementById("HeaderHere"));
+
         </script>
 
         <style>
