@@ -29,3 +29,6 @@
                         </div>
                     </nav>
                 </div>
+
+                <img src="http://baratiebakery-asv.stackstaging.com/Images/Home%20Bread2.jpg" className="card-img-top" alt="BaratieBakery" height='200px' width='200px' style={{ background: 'rgba(0, 0, 0, 0)', border: 'none' }} />
+                                

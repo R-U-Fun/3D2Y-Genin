@@ -72,7 +72,7 @@
                             &nbsp;&nbsp;&nbsp;
                             <a href="index.php"  style={{cursor:'default'}}><img src="https://as2.ftcdn.net/v2/jpg/03/60/12/53/1000_F_360125377_mVkIhqTKfQN6p6SEEwXC3DvbVEZ9YCYA.jpg" id="AaroophanIMG" height="35px" width="35px" className="rounded-5" /></a> 
                             &nbsp;&nbsp;&nbsp;
-                            <a className="navbar-brand fw-bold font-arial" id="PageNameA" href="index.php" style={{ cursor:'default' }}>ML</a>
+                            <a className="navbar-brand fw-bold font-arial" id="PageNameA" href="index.php" style={{ cursor:'default', color:'rgba(210, 230, 250, 0.9)'  }}>ML</a>
                             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="true" aria-label="Toggle">
                                 <span className="navbar-toggler-icon"></span>
                             </button>
@@ -90,6 +90,9 @@
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}>Series</a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}>Anime</a>
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}>Search</a>
@@ -122,10 +125,43 @@
 
         <br><br>
 
+<div class="p-3" id="Home">
 
     <div id="AppHere"></div>
+    
+        <script type="text/babel">
+            function HomeObjs({Linke, Icone}){
+                return(
+                    <div className="col-4 col-sm-4 col-lg-4 rounded-4" id="box">
+                        <div className="card my-4 text-white" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none'}}>
+                            <h1 style={{ fontsize: '60px', color: '#003475'}}><i className={`bi bi-${Icone}`}></i></h1>
+                            <div className="card-body" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none' }}>
+                                <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: '#003475'}}>{Linke}</h5>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            
+            function HomePage(){
+                return(
+                    <div>
+                        <div id="HomeName"><a><b>M</b>L</a></div>
 
-        <div id="HomeName"><a><b>M</b>L</a></div><br><br>
+                        <div className="container my-4 text-center">
+                            <div className="row col-lg-12 col-xs-1 gx-3 text-center">
+
+                                <HomeObjs Linke='Movies' Icone='film' />
+                                <HomeObjs Linke='Series' Icone='tv' />
+                                <HomeObjs Linke='Anime'  Icone='sunglasses' />
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            ReactDOM.render(<HomePage/> , document.getElementById("AppHere"));
+        </script>
+
         <style>
             #HomeName
             {
@@ -150,14 +186,18 @@
                 font-size: 150px;
                 letter-spacing: 20px;
             }
+            #box 
+            {
+                transition: box-shadow .2s;
+            }
+
+            #box:hover
+            {
+                box-shadow: 1px 1px 15px 10px #003475;
+            }
         </style>
 
-
-
-
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
+</div>
 
     <div id="FooterHere"></div>
     <script type="text/babel">
@@ -167,7 +207,7 @@
                     <div className="container">
                         <br/><hr/><br/>
                         <div className="text-center">
-                            <p style={{ cursor:'default' }}>&copy; 2023 Aaroophan</p>
+                            <p style={{ cursor:'default', color:'rgba(210, 230, 250, 0.9)' }}>&copy; 2023 Aaroophan</p>
                             <ul className="list-inline">
                                 <li className="list-inline-item"><a href="https://www.instagram.com/aaroophan/?theme=dark" style={{ cursor:'default', fontsize: '20px' }}><i className="bi bi-instagram"></i></a></li>
                                 <li className="list-inline-item"><a href="https://twitter.com/Aaroophan" style={{ cursor:'default', fontsize: '20px' }}><i className="bi bi-twitter"></i></a></li>
@@ -182,5 +222,6 @@
         
         ReactDOM.render(<Footer/> , document.getElementById("FooterHere"));
     </script>
+
 </body>
 </html>
