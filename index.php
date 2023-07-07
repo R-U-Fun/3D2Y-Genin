@@ -97,13 +97,30 @@
                                     <li className="nav-item">
                                         <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}>Search</a>
                                     </li>
+                                    <li className="nav-item">
+                                        <input class="nav-link p-2 form-control" type="search" placeholder="Search" />
+                                    </li>
                                 </ul>
                             </div>
-                            <ul className="list-inline">
-                                <li className="list-inline-item"><a href="https://www.instagram.com/aaroophan/?theme=dark" style={{ cursor:'default' }}><h2><i className="bi bi-view-list mx-5"></i></h2></a></li>
-                                <li className="list-inline-item"><a href="https://www.linkedin.com/in/aaroophan" style={{ cursor:'default' }}><h2><i className="bi bi-person mx-5"></i></h2></a></li>
-                                <li className="list-inline-item"><a href="https://github.com/R-U-Fun" style={{ cursor:'default' }}><i className="bi bi-brightness-high mx-5"></i></a></li>
-                            </ul>
+                            <div className="collapse navbar-collapse" id="navbarNav"><h2><i className="bi bi-view-list" style={{ cursor:'default', color: 'rgba(0, 0, 0, 0)' }}></i></h2></div>
+                            <div className="collapse navbar-collapse" id="navbarNav"><h2><i className="bi bi-view-list" style={{ cursor:'default', color: 'rgba(0, 0, 0, 0)' }}></i></h2></div>
+                            <div className="collapse navbar-collapse" id="navbarNav"><h2><i className="bi bi-view-list" style={{ cursor:'default', color: 'rgba(0, 0, 0, 0)' }}></i></h2></div>
+                            <div className="collapse navbar-collapse" id="navbarNav">
+                                <ul className="navbar-nav">
+                                    <li className="nav-item">
+                                        <input class="nav-link p-2 form-control" type="search" placeholder="Search" />
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}><h2><i className="bi bi-view-list mx-3"></i></h2></a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}><h2><i className="bi bi-person mx-3"></i></h2></a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className="nav-link p-2" href="index.php" style={{ cursor:'default' }}><h2><i className="bi bi-brightness-high mx-3"></i></h2></a>
+                                    </li>
+                                </ul>
+                            </div>
                         </nav>
                     </div>
                 );
