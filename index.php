@@ -26,10 +26,8 @@
 </head>
 <body>
 
-
-    <!--SECRET-->
-    <div id="Secret"></div>
-    <script type="text/babel">
+    
+        <script type="text/babel">
             function Secret(){
                 return(
                     <div className="accordion position-fixed top-25 start-20" style={{ background: 'transparent', border: 'none', cursor:'default' }} id="accordionPanelsStayOpen1"><br/><br/>
@@ -50,21 +48,100 @@
                 );
             }
             ReactDOM.render(<Secret/> , document.getElementById("Secret"));
-        </script>
 
-    <style>
-        body{
-                background: linear-gradient(to top, #003475 0%, #EDF5FF 100%);
-                font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, 'sans-serif'
+            function HomeObjs({Name, Linke, Icone}){
+                return(
+                    <div className="col-sm-4 col-lg-4 rounded-4" id="box" onClick={Linke}>
+                        <div className="card my-4 text-white" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none'}}>
+                            <h1 style={{ fontsize: '60px', color: '#003475'}}><i className={`bi bi-${Icone}`}></i></h1>
+                            <div className="card-body" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none' }}>
+                                <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: '#003475'}}>{Name}</h5>
+                            </div>
+                        </div>
+                    </div>
+                );
             }
-        nav, footer{
-                font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, 'sans-serif'
+            function HomePage(){
+                return(
+                    <div>
+                        <div id="HomeName"><a><b>M</b>L</a></div>
+
+                        <div className="container my-4 text-center">
+                            <div className="row col-lg-12 col-xs-1 gx-3 text-center">
+                                <HomeObjs Name='Movies' Linke={MoviePageCall} Icone='film' />
+                                <HomeObjs Name='Series' Linke={MoviePageCall} Icone='tv' />
+                                <HomeObjs Name='Anime'  Linke={MoviePageCall} Icone='sunglasses' />
+                            </div>
+                        </div>
+                    </div>
+                );
             }
-    </style>
+            function HomePageCall(){
+                ReactDOM.render(<HomePage/> , document.getElementById("AppHere"));
+            }
+            ReactDOM.render(<HomePage/> , document.getElementById("AppHere"));
 
+            function MovieObjs({Linke, Icone}){
+                return(
+                    <div className="col-sm-6 col-lg-3 p-3" style={{ border: 'none'}}>
+                        <div className="card text-white rounded-4" id="box" style={{ border: 'none'}}>
+                            <a className='rounded-4' style={{ textDecoration: 'none', color: 'white', background: 'rgba(0, 33, 74, 0.9)', border: 'none'}}>
+                                <img src="https://img.yts.mx/assets/images/movies/guardians_of_the_galaxy_vol_3_2023/medium-cover.jpg" className="card-img-top rounded-4" alt="BaratieBakery" style={{ border: 'none'}} />
+                                <div className="card-body" style={{ border: 'none' }}>
+                                    <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)'}}>{Linke}</h5>
+                                    <p className="card-text" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)' }}>This is this website itself. I developed this to hone my skills.</p>
+                                    <p className="card-text fs-6 mb-2" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)' }}><small>{Icone}</small></p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                );
+            }
+            function MoviePage(){
+                return(
+                    <div>
+                        <div id="HomeName"><a><b>Movie</b>List</a></div>
 
-        <div id="HeaderHere" class="container"></div>
-        <script type="text/babel">
+                        <div className="container my-4 text-center">
+                            <div className="row col-lg-12 col-xs-1 gx-3 text-center">
+
+                                <MovieObjs Linke='Guardians of The Galaxy Vol. 3' Icone='film' />
+                                <MovieObjs Linke='Movie2' Icone='tv' />
+                                <MovieObjs Linke='Movie3' Icone='film' />
+                                <MovieObjs Linke='Movie3' Icone='film' />
+                                <MovieObjs Linke='Movie3' Icone='film' />
+                                <MovieObjs Linke='Movie3' Icone='film' />
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            function MoviePageCall(){
+                ReactDOM.render(<MoviePage/> , document.getElementById("AppHere"));
+            }
+
+            function Footer(){
+                return(
+                    <footer className="footer text-light py-5 bottom" style={{ background: 'linear-gradient(to bottom, transparent 0%, #111111 100%)' }}>
+                        <div className="container">
+                            <br/><hr/><br/>
+                            <div className="text-center">
+                                <a href="http://aaroophan-com.stackstaging.com" style={{ cursor:'default', color:'rgba(210, 230, 250, 0.9)', textDecoration:'none' }}>&copy; 2023 Aaroophan</a>
+                                <br/><br/>
+                                <ul className="list-inline">
+                                    <li className="list-inline-item"><a href="https://www.instagram.com/aaroophan/?theme=dark" style={{ cursor:'default', fontsize: '20px' }}><i className="bi bi-instagram"></i></a></li>
+                                    <li className="list-inline-item"><a href="https://twitter.com/Aaroophan" style={{ cursor:'default', fontsize: '20px' }}><i className="bi bi-twitter"></i></a></li>
+                                    <li className="list-inline-item"><a href="https://www.linkedin.com/in/aaroophan" style={{ cursor:'default', fontsize: '20px' }}><i className="bi bi-linkedin"></i></a></li>
+                                    <li className="list-inline-item"><a href="https://github.com/R-U-Fun" style={{ cursor:'default', fontsize: '20px' }}><i className="bi bi-github"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </footer>
+                );
+            }
+            ReactDOM.render(<Footer/> , document.getElementById("FooterHere"));
+
+            
             function Header(){
                 return(
                     <div className="container-fluids">
@@ -80,10 +157,7 @@
                             <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
                                 <ul className="navbar-nav">
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}>Home</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}>Profile</a>
+                                        <a className="nav-link p-2 mx-3" onClick={HomePageCall} style={{ cursor:'default' }}>Home</a>
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}>Movies</a>
@@ -101,10 +175,7 @@
                                         <input className="nav-link p-2 mx-1 form-control" type="search" placeholder="Search" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)' }}/>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-5" href="index.php" style={{ cursor:'default'}}>Log In</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default'}}><i className="bi bi-person mx-3"></i></a>
+                                        <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default'}}>Log In<i className="bi bi-person mx-3"></i></a>
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}><i className="bi bi-view-list mx-3"></i></a>
@@ -120,99 +191,20 @@
             }
             ReactDOM.render(<Header/> , document.getElementById("HeaderHere"));
         </script>
-        <style>
-            #PageNameA
-            {
-                font-size: 30px; 
-                font-family: 'Lato', sans-serif;
-                text-decoration: none;
-                transition: color 1s, font-size 1s;
-            }
-            #PageNameA:hover
-            {
-                color:#99D9EA;
-                cursor:default;
-                font-size: 50px;
-            }
-        </style>
-	
-
-
-        <br><br><br>
-
-<div class="p-2" id="Home">
-
-    <div id="AppHere"></div>
-    
-        <script type="text/babel">
-            function HomeObjs({Name, Linke, Icone}){
-                return(
-                    <div className="col-sm-4 col-lg-4 rounded-4" id="box" onClick={MoviePageCall}>
-                        <div className="card my-4 text-white" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none'}}>
-                            <h1 style={{ fontsize: '60px', color: '#003475'}}><i className={`bi bi-${Icone}`}></i></h1>
-                            <div className="card-body" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none' }}>
-                                <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: '#003475'}}>{Linke}</h5>
-                            </div>
-                        </div>
-                    </div>
-                );
-            }
-            function HomePage(){
-                return(
-                    <div>
-                        <div id="HomeName"><a><b>M</b>L</a></div>
-
-                        <div className="container my-4 text-center">
-                            <div className="row col-lg-12 col-xs-1 gx-3 text-center">
-                                <HomeObjs Name='Movies' Linke='Movies' Icone='film' />
-                                <HomeObjs Name='Series' Linke='Series' Icone='tv' />
-                                <HomeObjs Name='Anime' Linke='Anime'  Icone='sunglasses' />
-                            </div>
-                        </div>
-                    </div>
-                );
-            }
-            ReactDOM.render(<HomePage/> , document.getElementById("AppHere"));
-
-            function MovieObjs({Linke, Icone}){
-                return(
-                    <div className="col-sm-4 col-lg-4 rounded-4" id="box">
-                        <div className="card my-4 text-white" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none'}}>
-                            <h1 style={{ fontsize: '60px', color: '#003475'}}><i className={`bi bi-${Icone}`}></i></h1>
-                            <div className="card-body" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none' }}>
-                                <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: '#003475'}}>{Linke}</h5>
-                            </div>
-                        </div>
-                    </div>
-                );
-            }
-            function MoviePage(){
-                return(
-                    <div>
-                        <div id="HomeName"><a><b>Movie</b>List</a></div>
-
-                        <div className="container my-4 text-center">
-                            <div className="row col-lg-12 col-xs-1 gx-3 text-center">
-
-                                <MovieObjs Linke='Movie1' Icone='film' />
-                                <MovieObjs Linke='Movie2' Icone='tv' />
-                                <MovieObjs Linke='Movie3' Icone='film' />
-                            </div>
-                        </div>
-                    </div>
-                );
-            }
-            function MoviePageCall(){
-                ReactDOM.render(<MoviePage/> , document.getElementById("AppHere"));
-            }
-        </script>
 
         <style>
+            body{
+                background: linear-gradient(to top, #003475 0%, #EDF5FF 100%);
+                font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, 'sans-serif'
+            }
+            nav, footer{
+                font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, 'sans-serif'
+            }
             #HomeName
             {
                 width: 100%;
                 margin: auto;
-                padding: 20px 0;
+                padding: 10px 0;
                 text-align: center;
                 font-size: 50px;
                 font-family: 'Lato', sans-serif;
@@ -240,35 +232,38 @@
             {
                 box-shadow: 1px 1px 15px 10px #003475;
             }
+            #PageNameA
+            {
+                font-size: 30px; 
+                font-family: 'Lato', sans-serif;
+                text-decoration: none;
+                transition: color 1s, font-size 1s;
+            }
+            #PageNameA:hover
+            {
+                color:#99D9EA;
+                cursor:default;
+                font-size: 50px;
+            }
         </style>
 
-</div>
 
-<br/><br/>
-    <div id="FooterHere"></div>
-    <script type="text/babel">
-        function Footer(){
-            return(
-                <footer className="footer text-light py-5 bottom" style={{ background: 'linear-gradient(to bottom, transparent 0%, #111111 100%)' }}>
-                    <div className="container">
-                        <br/><hr/><br/>
-                        <div className="text-center">
-                            <a style={{ cursor:'default', color:'rgba(210, 230, 250, 0.9)' }}>&copy; 2023 Aaroophan</a>
-                            <br/><br/>
-                            <ul className="list-inline">
-                                <li className="list-inline-item"><a href="https://www.instagram.com/aaroophan/?theme=dark" style={{ cursor:'default', fontsize: '20px' }}><i className="bi bi-instagram"></i></a></li>
-                                <li className="list-inline-item"><a href="https://twitter.com/Aaroophan" style={{ cursor:'default', fontsize: '20px' }}><i className="bi bi-twitter"></i></a></li>
-                                <li className="list-inline-item"><a href="https://www.linkedin.com/in/aaroophan" style={{ cursor:'default', fontsize: '20px' }}><i className="bi bi-linkedin"></i></a></li>
-                                <li className="list-inline-item"><a href="https://github.com/R-U-Fun" style={{ cursor:'default', fontsize: '20px' }}><i className="bi bi-github"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </footer>
-            );
-        }
+
+    <div id="Secret"></div>
+
+    <div id="HeaderHere" class="container"></div>
         
-        ReactDOM.render(<Footer/> , document.getElementById("FooterHere"));
-    </script>
+    <br><br><br>
+
+    <div class="p-2" id="Home">
+
+        <div id="AppHere"></div>
+        
+    </div>
+
+    <br><br>
+    
+    <div id="FooterHere"></div>
 
 </body>
 </html>
