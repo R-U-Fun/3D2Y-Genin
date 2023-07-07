@@ -32,15 +32,15 @@
     <script type="text/babel">
             function Secret(){
                 return(
-                    <div className="accordion position-fixed top-25 start-20" style={{ background: 'transparent', border: 'none' }} id="accordionPanelsStayOpen1"><br/><br/>
+                    <div className="accordion position-fixed top-25 start-20" style={{ background: 'transparent', border: 'none', cursor:'default' }} id="accordionPanelsStayOpen1"><br/><br/>
                         <div className="accordion-item" style={{ background: 'transparent', border: 'none' }}>
                             <a className="accordion-header">
-                                <button className="opacity-75 position-fixed top-3 end-0 mt-5 me-3 p-100" style={{ background: 'transparent', fontfamily: 'Arial Black', border:'none', fontsize: '10px' }} type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne1" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne1">
+                                <button className="opacity-75 position-fixed top-3 end-0 mt-5 me-3 p-100" style={{ background: 'transparent', fontfamily: 'Arial Black', border:'none', fontsize: '10px', cursor:'default' }} type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne1" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne1">
                                     <i className="bi bi-emoji-wink"></i>
                                 </button>
                             </a>
                             <div id="panelsStayOpen-collapseOne1" className="accordion-collapse collapse p-4 p-md-5 rounded-3" style={{ background: 'transparent' }}>
-                                <div className="accordion-body" style={{ background: 'transparent', textalign: 'center' }}>
+                                <div className="accordion-body" style={{ background: 'transparent', textalign: 'center', cursor:'default' }}>
                                     HA! YOU FOUND THE SECRET!
                                     <i className="bi bi-bug-fill"></i>
                                 </div>
@@ -68,7 +68,7 @@
             function Header(){
                 return(
                     <div className="container-fluids">
-                        <nav className="navbar navbar-expand-md navbar-dark  fixed-top" style={{ background: 'rgba(0, 0, 10, 0.8)' }}>
+                        <nav className="navbar navbar-expand-md navbar-dark fixed-top" style={{ background: 'rgba(0, 0, 10, 0.8)', cursor:'default' }}>
                             &nbsp;&nbsp;&nbsp;
                             <a href="index.php"  style={{cursor:'default'}}><img src="https://as2.ftcdn.net/v2/jpg/03/60/12/53/1000_F_360125377_mVkIhqTKfQN6p6SEEwXC3DvbVEZ9YCYA.jpg" id="AaroophanIMG" height="35px" width="35px" className="rounded-5" /></a> 
                             &nbsp;&nbsp;&nbsp;
@@ -99,6 +99,11 @@
                                     </li>
                                 </ul>
                             </div>
+                            <ul className="list-inline">
+                                <li className="list-inline-item"><a href="https://www.instagram.com/aaroophan/?theme=dark" style={{ cursor:'default' }}><h2><i className="bi bi-view-list mx-5"></i></h2></a></li>
+                                <li className="list-inline-item"><a href="https://www.linkedin.com/in/aaroophan" style={{ cursor:'default' }}><h2><i className="bi bi-person mx-5"></i></h2></a></li>
+                                <li className="list-inline-item"><a href="https://github.com/R-U-Fun" style={{ cursor:'default' }}><i className="bi bi-brightness-high mx-5"></i></a></li>
+                            </ul>
                         </nav>
                     </div>
                 );
@@ -123,16 +128,16 @@
 	
 
 
-        <br><br>
+        <br><br><br>
 
-<div class="p-3" id="Home">
+<div class="p-2" id="Home">
 
     <div id="AppHere"></div>
     
         <script type="text/babel">
             function HomeObjs({Linke, Icone}){
                 return(
-                    <div className="col-4 col-sm-4 col-lg-4 rounded-4" id="box">
+                    <div className="col-sm-4 col-lg-4 rounded-4" id="box">
                         <div className="card my-4 text-white" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none'}}>
                             <h1 style={{ fontsize: '60px', color: '#003475'}}><i className={`bi bi-${Icone}`}></i></h1>
                             <div className="card-body" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none' }}>
@@ -203,11 +208,12 @@
     <script type="text/babel">
         function Footer(){
             return(
-                <footer className="footer text-light py-5" style={{ background: 'linear-gradient(to bottom, transparent 0%, #111111 100%)' }}>
+                <footer className="footer text-light py-5 bottom" style={{ background: 'linear-gradient(to bottom, transparent 0%, #111111 100%)' }}>
                     <div className="container">
                         <br/><hr/><br/>
                         <div className="text-center">
-                            <p style={{ cursor:'default', color:'rgba(210, 230, 250, 0.9)' }}>&copy; 2023 Aaroophan</p>
+                            <a style={{ cursor:'default', color:'rgba(210, 230, 250, 0.9)' }}>&copy; 2023 Aaroophan</a>
+                            <br/><br/>
                             <ul className="list-inline">
                                 <li className="list-inline-item"><a href="https://www.instagram.com/aaroophan/?theme=dark" style={{ cursor:'default', fontsize: '20px' }}><i className="bi bi-instagram"></i></a></li>
                                 <li className="list-inline-item"><a href="https://twitter.com/Aaroophan" style={{ cursor:'default', fontsize: '20px' }}><i className="bi bi-twitter"></i></a></li>
