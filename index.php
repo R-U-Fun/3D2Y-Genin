@@ -80,19 +80,11 @@
             }
             ReactDOM.render(<HomePage/> , document.getElementById("AppHere"));
 
-
-            let MLINKS =['https://yts.mx/movies/captain-america-the-first-avenger-2011', 
-                                'https://yts.mx/movies/guardians-of-the-galaxy-vol-3-2023', 
-                                'https://yts.mx/movies/coco-2017', 
-                                'https://yts.mx/movies/vikram-2022',
-                                'https://yts.mx/movies/fast-x-2023',
-                                'https://yts.mx/movies/inside-out-2015'
-                            ];
-            console.log(MLINKS);
-
             function MovieBoxes({ Title, Year}){
-                const TitleWords = (Title+"_"+Year).split(" ");
-                const ImgTitle = TitleWords.join("_").toLowerCase();
+                let TitleWords = (Title+"_"+Year).split(" ");
+                let ImgTitle = TitleWords.join("_").toLowerCase();
+                TitleWords = ImgTitle.split('__');
+                ImgTitle = TitleWords.join("");
                 console.log(ImgTitle);
                 return(
                         <div className="card text-white rounded-4" id="box" style={{ border: 'none'}}>
@@ -108,7 +100,7 @@
             }
             function MoviePage({ MovieID, Title, Year}){
                 const MovieList = [];
-                for (let i = 0; i < MLINKS.length; i++) {
+                for (let i = 0; i < 20; i++) {
                     MovieList.push(<div key={i} className="col-sm-6 col-lg-3 p-3" id={`Movie${i}`} style={{ border: 'none'}}></div>);
                 }
                 return(
@@ -126,39 +118,44 @@
                 
                 ReactDOM.render(<MoviePage/> , document.getElementById("AppHere"));
 
-                for (let i = 0; i < MLINKS.length; i++){
-                    fetch(MLINKS[i])
-                        .then(response => response.text())
-                        .then(data => {
-                            let parser = new DOMParser();
-                            let doc = parser.parseFromString(data, 'text/html');
+                
+                fetch('https://yts.mx/browse-movies/0/all/all/7/downloads/0/en')
+                            .then(response => response.text())
+                            .then(data => {
+                                
+                                let i=0;
+                                let parser = new DOMParser();
+                                let doc = parser.parseFromString(data, 'text/html');
 
-                            let element = doc.querySelector('#mobile-movie-info');
-                            let myData = element.textContent;
-                            let TitleYearGenre = myData.split('\n');
-                            let TitleWords = TitleYearGenre[1].split('.');
-                            let Title = TitleWords.join("");
-                                TitleWords = Title.split(':');
-                                Title = TitleWords.join("");
-                            let Year = TitleYearGenre[2].split(' ');
+                                let elements = doc.querySelectorAll('.browse-movie-link');
+                                elements.forEach(element => {
+                                    let href = element.getAttribute('href');
+                                    console.log(href);
 
-                            ReactDOM.render(<MovieBoxes Title={Title} Year={Year[0]} /> , document.getElementById("Movie"+i));
-                    });
-                }
+                                    fetch(href)
+                                        .then(response => response.text())
+                                        .then(data => {
+                                            let parser = new DOMParser();
+                                            let doc = parser.parseFromString(data, 'text/html');
+
+                                            let element = doc.querySelector('#mobile-movie-info');
+                                            let myData = element.textContent;
+                                            let TitleYearGenre = myData.split('\n');
+                                            let TitleWords = TitleYearGenre[1].split('.');
+                                            let Title = TitleWords.join("");
+                                                TitleWords = Title.split(':');
+                                                Title = TitleWords.join("");
+                                                TitleWords = Title.split('-');
+                                                Title = TitleWords.join(" ");
+                                            let Year = TitleYearGenre[2].split(' ');
+
+                                            ReactDOM.render(<MovieBoxes Title={Title} Year={Year[0]} /> , document.getElementById("Movie"+i));
+                                            i++;
+                                    });
+                                });
+                });
+                    
             }
-            fetch('https://yts.mx/browse-movies/0/all/all/7/downloads/0/en')
-                        .then(response => response.text())
-                        .then(data => {
-                            let parser = new DOMParser();
-                            let doc = parser.parseFromString(data, 'text/html');
-
-                            let elements = doc.querySelectorAll('.browse-movie-link');
-                            elements.forEach(element => {
-                                let href = element.getAttribute('href');
-                                console.log(href);
-                            });
-
-            });
 
 
             function Footer(){
