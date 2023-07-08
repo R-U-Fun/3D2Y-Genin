@@ -81,72 +81,20 @@
             ReactDOM.render(<HomePage/> , document.getElementById("AppHere"));
 
 
+            let MLINKS =['https://yts.mx/movies/captain-america-the-first-avenger-2011', 
+                                'https://yts.mx/movies/guardians-of-the-galaxy-vol-3-2023', 
+                                'https://yts.mx/movies/coco-2017', 
+                                'https://yts.mx/movies/vikram-2022',
+                                'https://yts.mx/movies/fast-x-2023',
+                                'https://yts.mx/movies/inside-out-2015'
+                            ];
+            console.log(MLINKS);
 
-            let MList = []
-
-            // MList[0] = {
-            //         Desc:
-            //             "Peter Quill, still reeling from the loss of Gamora, must rally his team around him to defend the universe along with protecting one of their own. A mission that, if not completed successfully, could quite possibly lead to the end of the Guardians as we know them.",
-            //         Genre: "Action/Superhero/Comedy/Sci-fi",
-            //         Rating: 8.2,
-            //         Title: "Guardians of The Galaxy Vol 3",
-            //         Year: 2023,
-            // };
-            MList[0] = {
-                                     Desc:
-                                         "Peter Quill, still reeling from the loss of Gamora, must rally his team around him to defend the universe along with protecting one of their own. A mission that, if not completed successfully, could quite possibly lead to the end of the Guardians as we know them.",
-                                     Genre: "Action/Superhero/Comedy/Sci-fi",
-                                     Rating: 8.2,
-                                     Title: "Guardians of The Galaxy Vol 3",
-                                     Year: 2023,
-                            };
-            MList[1] = {
-                    Desc:
-                        "Super-Hero partners Scott Lang and Hope van Dyne, along with with Hope's parents Janet van Dyne and Hank Pym, and Scott's daughter Cassie Lang, find themselves exploring the Quantum Realm, interacting with strange new creatures and embarking on an adventure that will push them beyond the limits of what they thought possible.",
-                    Genre: "Action/Adventure/Comedy/Sci-fi",
-                    Rating: 6.1,
-                    Title: "Ant Man and the Wasp Quantumania",
-                    Year: 2023,
-            };
-            MList[2] = {
-                    Desc:
-                        "Over many missions and against impossible odds, Dom Toretto and his family have outsmarted, out-nerved and outdriven every foe in their path. Now, they confront the most lethal opponent they've ever faced: A terrifying threat emerging from the shadows of the past who's fueled by blood revenge, and who is determined to shatter this family and destroy everything—and everyone—that Dom loves, forever.",
-                    Genre: "Action/Adventure/Crime/Mystery/Thriller",
-                    Rating: 5.9,
-                    Title: "Fast X",
-                    Year: 2023,
-            };
-            MList[3] = {
-                    Desc:
-                        "Despite his family’s baffling generations-old ban on music, Miguel dreams of becoming an accomplished musician like his idol, Ernesto de la Cruz. Desperate to prove his talent, Miguel finds himself in the stunning and colorful Land of the Dead following a mysterious chain of events. Along the way, he meets charming trickster Hector, and together, they set off on an extraordinary journey to unlock the real story behind Miguel's family history.",
-                    Rating: 8.4,
-                    Title: "Coco",
-                    Year: 2017,
-            };
-            MList[4] = {
-                    Desc:
-                        "Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man.",
-                    Genre: "Action/Adventure/Fantasy/Sci-Fi",
-                    Rating: 8.2,
-                    Title: "Spider Man No Way Home",
-                    Year: 2021,
-            };
-            MList[5] = {
-                    Desc:
-                        "Amar is assigned to investigate a case of serial killings. When Amar investigates the case, he realizes it is not what it seems to be and following down this path will lead to nothing but war between everyone involved.",
-                    Genre: "Action/Thriller/Crime",
-                    Rating: 8.3,
-                    Title: "Vikram",
-                    Year: 2022,
-            };
-            
-
-            function MovieObjs({ Title, Year}){
+            function MovieBoxes({ Title, Year}){
                 const TitleWords = (Title+"_"+Year).split(" ");
                 const ImgTitle = TitleWords.join("_").toLowerCase();
                 console.log(ImgTitle);
                 return(
-                    <div className="col-sm-6 col-lg-3 p-3" style={{ border: 'none'}}>
                         <div className="card text-white rounded-4" id="box" style={{ border: 'none'}}>
                             <a className='rounded-4' style={{ textDecoration: 'none', color: 'white', background: 'rgba(0, 33, 74, 0.9)', border: 'none'}}>
                                 <img src={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} className="card-img-top rounded-4" alt={`${Title}`} style={{ border: 'none'}} />
@@ -156,13 +104,12 @@
                                 </div>
                             </a>
                         </div>
-                    </div>
                 );
             }
-            function MoviePage({ Title, Year}){
+            function MoviePage({ MovieID, Title, Year}){
                 const MovieList = [];
-                for (let i = 0; i < MList.length; i++) {
-                    MovieList.push(<MovieObjs key={i} Title={Title} Year={Year} />);
+                for (let i = 0; i < MLINKS.length; i++) {
+                    MovieList.push(<div key={i} className="col-sm-6 col-lg-3 p-3" id={`Movie${i}`} style={{ border: 'none'}}></div>);
                 }
                 return(
                     <div>
@@ -176,12 +123,8 @@
                 );
             }
             function MoviePageCall(){
-                let MLINKS =['https://yts.mx/movies/captain-america-the-first-avenger-2011', 
-                                'https://yts.mx/movies/guardians-of-the-galaxy-vol-3-2023', 
-                                'https://yts.mx/movies/coco-2017', 
-                                'https://yts.mx/movies/vikram-2022'
-                            ];
-                console.log(MLINKS);
+                
+                ReactDOM.render(<MoviePage/> , document.getElementById("AppHere"));
 
                 for (let i = 0; i < MLINKS.length; i++){
                     fetch(MLINKS[i])
@@ -199,11 +142,23 @@
                                 Title = TitleWords.join("");
                             let Year = TitleYearGenre[2].split(' ');
 
-                            ReactDOM.render(<MoviePage Title={Title} Year={Year[0]} /> , document.getElementById("AppHere"));
+                            ReactDOM.render(<MovieBoxes Title={Title} Year={Year[0]} /> , document.getElementById("Movie"+i));
                     });
                 }
-
             }
+            fetch('https://yts.mx/browse-movies/0/all/all/7/downloads/0/en')
+                        .then(response => response.text())
+                        .then(data => {
+                            let parser = new DOMParser();
+                            let doc = parser.parseFromString(data, 'text/html');
+
+                            let elements = doc.querySelectorAll('.browse-movie-link');
+                            elements.forEach(element => {
+                                let href = element.getAttribute('href');
+                                console.log(href);
+                            });
+
+            });
 
 
             function Footer(){
