@@ -23,44 +23,8 @@
             
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <title>ML</title>
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-analytics.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-            apiKey: "AIzaSyAtsBOvr0h9cgd99lPVmJbgg3-YChMv8So",
-            authDomain: "d2y-genin.firebaseapp.com",
-            projectId: "d2y-genin",
-            storageBucket: "d2y-genin.appspot.com",
-            messagingSenderId: "208345580649",
-            appId: "1:208345580649:web:aa56944f791ed602d60ef8",
-            measurementId: "G-6N502447HW"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const db = getFirestore(app);
-
-        function getMovies() {
-            const MovieCol = collection(db, 'users');
-            const MovieSnapshot = await getDocs(usersCol);
-            const MovieList = userSnapshot.docs.map(doc => doc.data());
-            return (<h1>{MovieList}</h1>);
-        }
-        
-        ReactDOM.render(<getMovies/> , document.getElementById("FirebaseCheck"));
-    </script>
 </head>
 <body>
-
-        <br><br><div id="FirebaseCheck">aaa</div>
-    
         <script type="text/babel">
             function Secret(){
                 return(
@@ -83,6 +47,7 @@
             }
             ReactDOM.render(<Secret/> , document.getElementById("Secret"));
 
+            
             function HomeObjs({Name, Linke, Icone}){
                 return(
                     <div className="col-sm-4 col-lg-4 rounded-4" id="box" onClick={Linke}>
@@ -115,15 +80,69 @@
             }
             ReactDOM.render(<HomePage/> , document.getElementById("AppHere"));
 
-            function MovieObjs({Linke, Icone}){
+            
+
+            let MList = []
+            MList[0] = {
+                    Desc:
+                        "Peter Quill, still reeling from the loss of Gamora, must rally his team around him to defend the universe along with protecting one of their own. A mission that, if not completed successfully, could quite possibly lead to the end of the Guardians as we know them.",
+                    Genre: "Action/Superhero/Comedy/Sci-fi",
+                    Rating: 8.2,
+                    Title: "Guardians of The Galaxy Vol 3",
+                    Year: 2023,
+            };
+            MList[1] = {
+                    Desc:
+                        "Super-Hero partners Scott Lang and Hope van Dyne, along with with Hope's parents Janet van Dyne and Hank Pym, and Scott's daughter Cassie Lang, find themselves exploring the Quantum Realm, interacting with strange new creatures and embarking on an adventure that will push them beyond the limits of what they thought possible.",
+                    Genre: "Action/Adventure/Comedy/Sci-fi",
+                    Rating: 6.1,
+                    Title: "Ant Man and the Wasp Quantumania",
+                    Year: 2023,
+            };
+            MList[2] = {
+                    Desc:
+                        "Over many missions and against impossible odds, Dom Toretto and his family have outsmarted, out-nerved and outdriven every foe in their path. Now, they confront the most lethal opponent they've ever faced: A terrifying threat emerging from the shadows of the past who's fueled by blood revenge, and who is determined to shatter this family and destroy everything—and everyone—that Dom loves, forever.",
+                    Genre: "Action/Adventure/Crime/Mystery/Thriller",
+                    Rating: 5.9,
+                    Title: "Fast X",
+                    Year: 2023,
+            };
+            MList[3] = {
+                    Desc:
+                        "Despite his family’s baffling generations-old ban on music, Miguel dreams of becoming an accomplished musician like his idol, Ernesto de la Cruz. Desperate to prove his talent, Miguel finds himself in the stunning and colorful Land of the Dead following a mysterious chain of events. Along the way, he meets charming trickster Hector, and together, they set off on an extraordinary journey to unlock the real story behind Miguel's family history.",
+                    Rating: 8.4,
+                    Title: "Coco",
+                    Year: 2017,
+            };
+            MList[4] = {
+                    Desc:
+                        "Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a super-hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man.",
+                    Genre: "Action/Adventure/Fantasy/Sci-Fi",
+                    Rating: 8.2,
+                    Title: "Spider Man No Way Home",
+                    Year: 2021,
+            };
+            MList[5] = {
+                    Desc:
+                        "Amar is assigned to investigate a case of serial killings. When Amar investigates the case, he realizes it is not what it seems to be and following down this path will lead to nothing but war between everyone involved.",
+                    Genre: "Action/Thriller/Crime",
+                    Rating: 8.3,
+                    Title: "Vikram",
+                    Year: 2022,
+            };
+            
+
+            function MovieObjs({ Title, Year}){
+                const TitleWords = (Title+"_"+Year).split(" ");
+                const ImgTitle = TitleWords.join("_").toLowerCase();
                 return(
                     <div className="col-sm-6 col-lg-3 p-3" style={{ border: 'none'}}>
                         <div className="card text-white rounded-4" id="box" style={{ border: 'none'}}>
                             <a className='rounded-4' style={{ textDecoration: 'none', color: 'white', background: 'rgba(0, 33, 74, 0.9)', border: 'none'}}>
-                                <img src="https://img.yts.mx/assets/images/movies/guardians_of_the_galaxy_vol_3_2023/medium-cover.jpg" className="card-img-top rounded-4" alt="BaratieBakery" style={{ border: 'none'}} />
+                                <img src={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} className="card-img-top rounded-4" alt={`${Title}`} style={{ border: 'none'}} />
                                 <div className="card-body" style={{ border: 'none' }}>
-                                    <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)'}}>{Linke}</h5>
-                                    <p className="card-text fs-6 mb-2" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)' }}><small>{Icone}</small></p>
+                                    <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)'}}>{Title}</h5>
+                                    <p className="card-text fs-6 mb-2" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)' }}><small>{Year}</small></p>
                                 </div>
                             </a>
                         </div>
@@ -131,19 +150,18 @@
                 );
             }
             function MoviePage(){
+
+                const MovieList = [];
+                for (let i = 0; i < MList.length; i++) {
+                    MovieList.push(<MovieObjs key={i} Title={MList[i].Title} Year={MList[i].Year} />);
+                }
                 return(
                     <div>
-                        <div id="HomeName"><a><b>Movie</b>List</a></div>
+                        <div id="HomeName"><a contentEditable="true" ><b>Movie</b>List</a></div>
 
                         <div className="container my-4 text-center">
                             <div className="row col-lg-12 col-xs-1 gx-3 text-center">
-
-                                <MovieObjs Linke='Guardians of The Galaxy Vol. 3' Icone='2023' />
-                                <MovieObjs Linke='Movie2' Icone='tv' />
-                                <MovieObjs Linke='Movie3' Icone='film' />
-                                <MovieObjs Linke='Movie3' Icone='film' />
-                                <MovieObjs Linke='Movie3' Icone='film' />
-                                <MovieObjs Linke='Movie3' Icone='film' />
+                                {MovieList}
                             </div>
                         </div>
                     </div>
@@ -152,6 +170,7 @@
             function MoviePageCall(){
                 ReactDOM.render(<MoviePage/> , document.getElementById("AppHere"));
             }
+
 
             function Footer(){
                 return(
@@ -196,25 +215,25 @@
                                         <a className="nav-link p-2 mx-3" onClick={MoviePageCall} style={{ cursor:'default' }}>Movies</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3"   style={{ cursor:'default' }}>Series</a>
+                                        <a className="nav-link p-2 mx-3" onClick={MoviePageCall} style={{ cursor:'default' }}>Series</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3"   style={{ cursor:'default' }}>Anime</a>
+                                        <a className="nav-link p-2 mx-3" onClick={MoviePageCall} style={{ cursor:'default' }}>Anime</a>
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link p-2 mx-3" style={{ cursor:'default', color:'rgba(210, 230, 250, 0)' }}>Aaroophan-3D2Y-Genin</a>
                                     </li>
                                     <li className="nav-item">
-                                        <input className="nav-link p-2 mx-1 form-control" type="search" placeholder="Search" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)' }}/>
+                                        <input className="nav-link p-2 mx-3 form-control" type="search" placeholder="Search" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)' }}/>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3"   style={{ cursor:'default'}}>Log In<i className="bi bi-person mx-3"></i></a>
+                                        <a className="nav-link p-2 mx-3" onClick={MoviePageCall} style={{ cursor:'default'}}><i className="bi bi-person mx-3"></i>Log In</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3"   style={{ cursor:'default' }}><i className="bi bi-view-list mx-3"></i></a>
+                                        <a className="nav-link p-2 mx-3" onClick={MoviePageCall} style={{ cursor:'default' }}><i className="bi bi-view-list mx-3"></i></a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3"   style={{ cursor:'default' }}><i className="bi bi-brightness-high mx-3"></i></a>
+                                        <a className="nav-link p-2 mx-3" onClick={MoviePageCall} style={{ cursor:'default' }}><i className="bi bi-brightness-high mx-3"></i></a>
                                     </li>
                                 </ul>
                             </div>
@@ -282,18 +301,13 @@
         </style>
 
 
-
     <div id="Secret"></div>
 
     <div id="HeaderHere" class="container"></div>
         
-    <br><br><br>
 
-    <div class="p-2" id="Home">
-
-        <div id="AppHere"></div>
-        
-    </div>
+    <div class="p-4" id="SearchHere"></div>
+    <div class="p-4" id="AppHere"></div>
 
     <br><br>
     

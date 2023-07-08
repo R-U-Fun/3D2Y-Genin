@@ -1,5 +1,26 @@
 
-			    <div className="container-fluids">
+			    
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("/HealthScore/" + Username + "/" + Day + "");
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    ValueFromDB = dataSnapshot.getValue(Integer.class);
+                    System.out.println(ValueFromDB);
+                }
+            }
+        });
+                
+                
+                
+                
+                
+                
+                
+                
+                <div className="container-fluids">
                     <nav className="navbar navbar-expand-md navbar-dark bi-border-left fixed-top"  style="background: rgba(0, 0, 10, 0.8);">
                         <a href="index.php"  style="cursor:default;"><img src="imgs/Aaroophan - Portrait - 2023.jpeg" id="AaroophanIMG" height="35px" width="35px" class="rounded-5" /></a> 
                         &nbsp;&nbsp;&nbsp;
