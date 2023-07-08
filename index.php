@@ -80,17 +80,26 @@
             }
             ReactDOM.render(<HomePage/> , document.getElementById("AppHere"));
 
-            
+
 
             let MList = []
+
+            // MList[0] = {
+            //         Desc:
+            //             "Peter Quill, still reeling from the loss of Gamora, must rally his team around him to defend the universe along with protecting one of their own. A mission that, if not completed successfully, could quite possibly lead to the end of the Guardians as we know them.",
+            //         Genre: "Action/Superhero/Comedy/Sci-fi",
+            //         Rating: 8.2,
+            //         Title: "Guardians of The Galaxy Vol 3",
+            //         Year: 2023,
+            // };
             MList[0] = {
-                    Desc:
-                        "Peter Quill, still reeling from the loss of Gamora, must rally his team around him to defend the universe along with protecting one of their own. A mission that, if not completed successfully, could quite possibly lead to the end of the Guardians as we know them.",
-                    Genre: "Action/Superhero/Comedy/Sci-fi",
-                    Rating: 8.2,
-                    Title: "Guardians of The Galaxy Vol 3",
-                    Year: 2023,
-            };
+                                     Desc:
+                                         "Peter Quill, still reeling from the loss of Gamora, must rally his team around him to defend the universe along with protecting one of their own. A mission that, if not completed successfully, could quite possibly lead to the end of the Guardians as we know them.",
+                                     Genre: "Action/Superhero/Comedy/Sci-fi",
+                                     Rating: 8.2,
+                                     Title: "Guardians of The Galaxy Vol 3",
+                                     Year: 2023,
+                            };
             MList[1] = {
                     Desc:
                         "Super-Hero partners Scott Lang and Hope van Dyne, along with with Hope's parents Janet van Dyne and Hank Pym, and Scott's daughter Cassie Lang, find themselves exploring the Quantum Realm, interacting with strange new creatures and embarking on an adventure that will push them beyond the limits of what they thought possible.",
@@ -135,6 +144,7 @@
             function MovieObjs({ Title, Year}){
                 const TitleWords = (Title+"_"+Year).split(" ");
                 const ImgTitle = TitleWords.join("_").toLowerCase();
+                console.log(ImgTitle);
                 return(
                     <div className="col-sm-6 col-lg-3 p-3" style={{ border: 'none'}}>
                         <div className="card text-white rounded-4" id="box" style={{ border: 'none'}}>
@@ -149,16 +159,14 @@
                     </div>
                 );
             }
-            function MoviePage(){
-
+            function MoviePage({ Title, Year}){
                 const MovieList = [];
                 for (let i = 0; i < MList.length; i++) {
-                    MovieList.push(<MovieObjs key={i} Title={MList[i].Title} Year={MList[i].Year} />);
+                    MovieList.push(<MovieObjs key={i} Title={Title} Year={Year} />);
                 }
                 return(
                     <div>
-                        <div id="HomeName"><a contentEditable="true" ><b>Movie</b>List</a></div>
-
+                        <div id="HomeName"><a contentEditable="true"><b>Movie</b>List</a></div>
                         <div className="container my-4 text-center">
                             <div className="row col-lg-12 col-xs-1 gx-3 text-center">
                                 {MovieList}
@@ -168,7 +176,33 @@
                 );
             }
             function MoviePageCall(){
-                ReactDOM.render(<MoviePage/> , document.getElementById("AppHere"));
+                let MLINKS =['https://yts.mx/movies/captain-america-the-first-avenger-2011', 
+                                'https://yts.mx/movies/guardians-of-the-galaxy-vol-3-2023', 
+                                'https://yts.mx/movies/coco-2017', 
+                                'https://yts.mx/movies/vikram-2022'
+                            ];
+                console.log(MLINKS);
+
+                for (let i = 0; i < MLINKS.length; i++){
+                    fetch(MLINKS[i])
+                        .then(response => response.text())
+                        .then(data => {
+                            let parser = new DOMParser();
+                            let doc = parser.parseFromString(data, 'text/html');
+
+                            let element = doc.querySelector('#mobile-movie-info');
+                            let myData = element.textContent;
+                            let TitleYearGenre = myData.split('\n');
+                            let TitleWords = TitleYearGenre[1].split('.');
+                            let Title = TitleWords.join("");
+                                TitleWords = Title.split(':');
+                                Title = TitleWords.join("");
+                            let Year = TitleYearGenre[2].split(' ');
+
+                            ReactDOM.render(<MoviePage Title={Title} Year={Year[0]} /> , document.getElementById("AppHere"));
+                    });
+                }
+
             }
 
 
