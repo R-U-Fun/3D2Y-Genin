@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,24 +10,23 @@
     <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5/dist/css/bootstrap.min.css">
 
-    <link rel="icon" href="https://as2.ftcdn.net/v2/jpg/03/60/12/53/1000_F_360125377_mVkIhqTKfQN6p6SEEwXC3DvbVEZ9YCYA.jpg" type="image/jpeg" sizes="16x16" >
+    <link rel="icon" href="https://as2.ftcdn.net/v2/jpg/03/60/12/53/1000_F_360125377_mVkIhqTKfQN6p6SEEwXC3DvbVEZ9YCYA.jpg" type="image/jpeg" sizes="16x16">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-                integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-                crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-            
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <title>ML</title>
 </head>
+
 <body>
-        <script type="text/babel">
-            function Secret(){
+    <script type="text/babel">
+
+        function Secret(){
                 return(
                     <div className="accordion position-fixed top-25 start-20" style={{ background: 'transparent', border: 'none', cursor:'default' }} id="accordionPanelsStayOpen1"><br/><br/>
                         <div className="accordion-item" style={{ background: 'transparent', border: 'none' }}>
@@ -67,7 +67,7 @@
 
                         <div className="container my-4 text-center">
                             <div className="row col-lg-12 col-xs-1 gx-3 text-center">
-                                <HomeObjs Name='Movies' Linke={MoviePageCall} Icone='film' />
+                                <HomeObjs Name='Movies' Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='film' />
                                 <HomeObjs Name='Series' Linke={MoviePageCall} Icone='tv' />
                                 <HomeObjs Name='Anime'  Linke={MoviePageCall} Icone='sunglasses' />
                             </div>
@@ -78,23 +78,8 @@
             function HomePageCall(){
                 ReactDOM.render(<HomePage/> , document.getElementById("AppHere"));
             }
-            ReactDOM.render(<HomePage/> , document.getElementById("AppHere"));
-
-
-
-            let Link = 'https://yts.mx/movies/avengers-infinity-war-20182';
-
-            fetch(Link)
-                .then(response => {
-                    if (response.ok) {
-                    console.log('Y');
-                    } else {
-                    console.log('N');
-                    }
-                })
-                .catch(() => {
-                    console.log('N');
-            });
+            
+            window.onload = HomePageCall;
 
 
             function MovieBoxes({ Title, Year}){
@@ -131,12 +116,11 @@
                     </div>
                 );
             }
-            function MoviePageCall(){
+            function MoviePageCall({Linke}){
                 
                 ReactDOM.render(<MoviePage/> , document.getElementById("AppHere"));
-
                 
-                fetch('https://yts.mx/browse-movies/0/all/all/8/downloads/0/all')
+                fetch(Linke)
                             .then(response => response.text())
                             .then(data => {
                                 
@@ -179,9 +163,29 @@
                                     });
                                 });
                 });
-                    
+                return null;
             }
 
+            function SearchCall({ Title }){
+
+                    let Link;
+                    let TitleWords = (Title).split(" ");
+                    let JoinTitle = TitleWords.join("%20").toLowerCase();
+                    TitleWords = JoinTitle.split('%20%20');
+                    JoinTitle = TitleWords.join("");
+                    if(JoinTitle === ""){
+                        Link = `https://yts.mx/browse-movies/0/all/all/8/downloads/0/all`;
+                    }
+                    else{
+                        Link = `https://yts.mx/browse-movies/${JoinTitle}/all/all/0/rating/0/all`;
+                    }
+
+                    console.log(Link);
+
+                    ReactDOM.render(<MoviePageCall Linke={Link}/> , document.getElementById("AppHere"));
+
+            }
+            
 
             function Footer(){
                 return(
@@ -204,7 +208,6 @@
             }
             ReactDOM.render(<Footer/> , document.getElementById("FooterHere"));
 
-            
             function Header(){
                 return(
                     <div className="container-fluids">
@@ -223,19 +226,19 @@
                                         <a className="nav-link p-2 mx-3" onClick={HomePageCall} style={{ cursor:'default' }}>Home</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3" onClick={MoviePageCall} style={{ cursor:'default' }}>Movies</a>
+                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}>Movies</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3" onClick={MoviePageCall} style={{ cursor:'default' }}>Series</a>
+                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}>Series</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link p-2 mx-3" onClick={MoviePageCall} style={{ cursor:'default' }}>Anime</a>
+                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}>Anime</a>
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link p-2 mx-3" style={{ cursor:'default', color:'rgba(210, 230, 250, 0)' }}>Aaroophan-3D2Y-Genin</a>
                                     </li>
                                     <li className="nav-item">
-                                        <input className="nav-link p-2 mx-3 form-control" type="search" placeholder="Search" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)' }}/>
+                                        <input className="nav-link p-2 mx-3 form-control" type="search" placeholder="Search" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)' }} onChange={function Call(event){ReactDOM.render(<SearchCall Title={event.target.value}/> , document.getElementById("AppHere"));}}/>
                                     </li>
                                     <li className="nav-item">
                                         <a className="nav-link p-2 mx-3" onClick={MoviePageCall} style={{ cursor:'default'}}><i className="bi bi-person mx-3"></i>Log In</a>
@@ -256,73 +259,75 @@
 
         </script>
 
-        <style>
-            body{
-                background: linear-gradient(to top, #003475 0%, #EDF5FF 100%);
-                font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, 'sans-serif'
-            }
-            nav, footer{
-                font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, 'sans-serif'
-            }
-            #HomeName
-            {
-                width: 100%;
-                margin: auto;
-                padding: 10px 0;
-                text-align: center;
-                font-size: 50px;
-                font-family: 'Lato', sans-serif;
-                letter-spacing: 2px;
-            }
-            #HomeName a
-            {
-                color: #003475;
-                text-decoration: none;
-                position: relative;
-                cursor:default;
-                transition: font-size 1s, letter-spacing 1s;
-            }
-            #HomeName a:hover
-            {
-                font-size: 75px;
-                letter-spacing: 20px;
-            }
-            #box 
-            {
-                transition: box-shadow .2s;
-            }
+    <style>
+        body {
+            background: linear-gradient(to top, #003475 0%, #EDF5FF 100%);
+            font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, 'sans-serif'
+        }
 
-            #box:hover
-            {
-                box-shadow: 1px 1px 15px 10px #003475;
-            }
-            #PageNameA
-            {
-                font-size: 30px; 
-                font-family: 'Lato', sans-serif;
-                text-decoration: none;
-                transition: color 1s, font-size 1s;
-            }
-            #PageNameA:hover
-            {
-                color:#99D9EA;
-                cursor:default;
-                font-size: 50px;
-            }
-        </style>
+        nav,
+        footer {
+            font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, 'sans-serif'
+        }
+
+        #HomeName {
+            width: 100%;
+            margin: auto;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 50px;
+            font-family: 'Lato', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        #HomeName a {
+            color: #003475;
+            text-decoration: none;
+            position: relative;
+            cursor: default;
+            transition: font-size 1s, letter-spacing 1s;
+        }
+
+        #HomeName a:hover {
+            font-size: 75px;
+            letter-spacing: 20px;
+        }
+
+        #box {
+            transition: box-shadow .2s;
+        }
+
+        #box:hover {
+            box-shadow: 1px 1px 15px 10px #003475;
+        }
+
+        #PageNameA {
+            font-size: 30px;
+            font-family: 'Lato', sans-serif;
+            text-decoration: none;
+            transition: color 1s, font-size 1s;
+        }
+
+        #PageNameA:hover {
+            color: #99D9EA;
+            cursor: default;
+            font-size: 50px;
+        }
+    </style>
 
 
     <div id="Secret"></div>
 
     <div id="HeaderHere" class="container"></div>
-        
-
-    <div class="p-4" id="SearchHere"></div>
-    <div class="p-4" id="AppHere"></div>
 
     <br><br>
     
+    <div class="p-4" id="AppHere"></div>
+
+    <br><br>
+
     <div id="FooterHere"></div>
 
 </body>
+
 </html>
