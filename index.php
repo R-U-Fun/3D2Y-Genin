@@ -80,6 +80,23 @@
             }
             ReactDOM.render(<HomePage/> , document.getElementById("AppHere"));
 
+
+
+            let Link = 'https://yts.mx/movies/avengers-infinity-war-20182';
+
+            fetch(Link)
+                .then(response => {
+                    if (response.ok) {
+                    console.log('Y');
+                    } else {
+                    console.log('N');
+                    }
+                })
+                .catch(() => {
+                    console.log('N');
+            });
+
+
             function MovieBoxes({ Title, Year}){
                 let TitleWords = (Title+"_"+Year).split(" ");
                 let ImgTitle = TitleWords.join("_").toLowerCase();
@@ -119,7 +136,7 @@
                 ReactDOM.render(<MoviePage/> , document.getElementById("AppHere"));
 
                 
-                fetch('https://yts.mx/browse-movies/0/all/all/7/downloads/0/en')
+                fetch('https://yts.mx/browse-movies/0/all/all/8/downloads/0/all')
                             .then(response => response.text())
                             .then(data => {
                                 
@@ -141,13 +158,21 @@
                                             let element = doc.querySelector('#mobile-movie-info');
                                             let myData = element.textContent;
                                             let TitleYearGenre = myData.split('\n');
+                                            let Year = TitleYearGenre[2].split(' ');
                                             let TitleWords = TitleYearGenre[1].split('.');
                                             let Title = TitleWords.join("");
                                                 TitleWords = Title.split(':');
                                                 Title = TitleWords.join("");
                                                 TitleWords = Title.split('-');
                                                 Title = TitleWords.join(" ");
-                                            let Year = TitleYearGenre[2].split(' ');
+                                                TitleWords = Title.split("'");
+                                                Title = TitleWords.join("");
+                                                TitleWords = Title.split("&");
+                                                Title = TitleWords.join("");
+                                                TitleWords = Title.split("#");
+                                                Title = TitleWords.join("");
+                                                TitleWords = Title.split(",");
+                                                Title = TitleWords.join("");
 
                                             ReactDOM.render(<MovieBoxes Title={Title} Year={Year[0]} /> , document.getElementById("Movie"+i));
                                             i++;
