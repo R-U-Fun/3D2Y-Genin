@@ -26,6 +26,18 @@
 <body>
     <script type="text/babel">
 
+        let Theme = true;
+        let LoggedIn = false;
+        
+    function Whole({LoggedIn, Theme}){
+
+        if (Theme) {
+            document.body.style.background = 'linear-gradient(to top, #003475 0%, #EDF5FF 100%)';
+        } else {
+            document.body.style.background = 'linear-gradient(to top, #003475 0%, #000000 100%)';
+        }
+        
+
         function Secret(){
                 return(
                     <div className="accordion position-fixed top-25 start-20" style={{ background: 'transparent', border: 'none', cursor:'default' }} id="accordionPanelsStayOpen1"><br/><br/>
@@ -82,40 +94,7 @@
             window.onload = HomePageCall;
 
 
-
-            function Modal(Title){
-                return(
-                        <div>
-                            <div className="modal modal-xl fade my-4 text-white" id="MP" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                                <div className="modal-dialog my-4 text-white">
-                                    <div className="modal-content my-4 text-white" style={{ background: 'linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, #2c2c2c 100%)', border: 'none'}}>
-                                        <div className="modal-header" style={{ border: 'none'}}>
-                                            <div style={{ cursor:'default', textalign: 'center'}}>
-                                                <h5 className="card-title fs-3" style={{ cursor:'default', textalign: 'center'}} id="project-name">HAHAHAHAHA</h5>
-                                            </div>
-                                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"><i className="bi bi-x-lg bg-white" style={{ borderradius: '50px'}}></i></button>
-                                            </div> 
-                                        <div className="modal-body text-white"> 
-                                                <div className="card text-white" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none', textalign: 'center'}}>
-                                                    <a id="project-link" style={{ textdecoration: 'none', color: 'white'}}>
-                                                        <img src="" className="card-img-top" alt="BaratieBakery" style={{ border: 'none'}} id="project-img" />
-                                                        <hr/>
-                                                        <div className="card-body" style={{ border: 'none'}}>
-                                                            <p className="card-text" style={{ cursor:'default'}} id="project-desc"></p><br/>
-                                                            <p className="card-text fs-6 mb-2" id="project-date"><small></small></p><br/>
-                                                            <a id="project-link2" href="#" className="btn btn-outline-light btn-lg px-3" style={{ '--bs-btn-padding-y': '.25rem', '--bs-btn-padding-x': '.5rem', '--bs-btn-font-size': '.75rem'}}>Visit Site</a><br/><br/>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                );
-    }
-
-    function MovieBoxes({ Title, Year}){
+    function MovieBoxes({ Title, Year, Desc}){
         let TitleWords = (Title+"_"+Year).split(" ");
         let ImgTitle = TitleWords.join("_").toLowerCase();
         TitleWords = ImgTitle.split('__');
@@ -126,9 +105,12 @@
         TitleWords2 = GoogleTitle.split('++');
         GoogleTitle = TitleWords2.join("");
         console.log(GoogleTitle);
+        let W2, W=(Year % 2);
+        (W === 1 ? W2 = true : W2 = false);
         return(
             <div className="card text-white rounded-4" id="box" style={{ border: 'none'}}>
-                <a className='rounded-4' style={{ textDecoration: 'none', color: 'white', background: 'rgba(0, 33, 74, 0.9)', border: 'none'}} role="button" data-bs-toggle="modal" data-bs-target="#MP" data-bs-title={Title} data-bs-desc="Description" data-bs-date="Nov 2022 - Dec 2022" data-bs-img={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} data-bs-link={`https://www.google.com/search?q=${GoogleTitle}`}>
+                <a className='rounded-4' style={{ textDecoration: 'none', color: 'white', background: 'rgba(0, 33, 74, 0.9)', border: 'none'}} role="button" data-bs-toggle="modal" data-bs-target="#MP" data-bs-title={Title} data-bs-desc={`${Desc}`} data-bs-date={`${Year}`} data-bs-img={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} data-bs-link={`https://www.google.com/search?q=${GoogleTitle}`}>
+                {W2 ? <i class="bi bi-check-circle-fill fs-1" style={{ position: 'absolute', top: '10px', left: '10px' , color:'rgba(54, 255, 60, 0.9)'}}></i> : null}
                     <img src={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} className="card-img-top rounded-4" alt={`${Title}`} style={{ border: 'none'}} />
                     <div className="card-body" style={{ border: 'none' }}>
                         <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)'}}>{Title}</h5>
@@ -196,8 +178,14 @@
                                 Title = TitleWords.join("");
                                 TitleWords = Title.split(",");
                                 Title = TitleWords.join("");
+                                
+                            let element2 = doc.querySelector('#synopsis');
+                            let myData2 = element2;
+                            let element3 = myData2.querySelector('p');
+                            let myData3 = element3.textContent;
+                            console.log(myData3);
 
-                            ReactDOM.render(<MovieBoxes Title={Title} Year={Year[0]} /> , document.getElementById("Movie"+i));
+                            ReactDOM.render(<MovieBoxes Title={Title} Year={Year[0]} Desc={myData3} /> , document.getElementById("Movie"+i));
                             
                             i++;
                     });
@@ -249,42 +237,8 @@
         }
         ReactDOM.render(<Footer /> , document.getElementById("FooterHere"));
 
-        function UserAccordion(){
-            return(
-                <div className="accordion accordion-flush" id="accordionFlushExample">
-                    <div className="accordion-item">
-                        <h2 className="accordion-header">
-                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            Accordion Item #1
-                        </button>
-                        </h2>
-                        <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                        <div className="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
-                        </div>
-                    </div>
-                    <div className="accordion-item">
-                        <h2 className="accordion-header">
-                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                            Accordion Item #2
-                        </button>
-                        </h2>
-                        <div id="flush-collapseTwo" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                        <div className="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
-                        </div>
-                    </div>
-                    <div className="accordion-item">
-                        <h2 className="accordion-header">
-                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                            Accordion Item #3
-                        </button>
-                        </h2>
-                        <div id="flush-collapseThree" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                        <div className="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
+        
+        //position: 'absolute', top: '65px', left: '1080px' ,
 
         function UserDetails(){
             return(
@@ -292,17 +246,35 @@
                         <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav2" aria-controls="navbarNav2" aria-expanded="true" aria-label="Toggle" className="nav-link p-2 mx-3" style={{ background: 'rgba(0, 0, 0, 0)', cursor:'default' }}>
                             <i className="bi bi-person"></i>
                         </button>
-                        <div className="collapse p-2" id="navbarNav2" style={{ cursor:'default' }}>
-                            <div className="rounded-3" style={{ background: 'rgba(0, 0, 10, 0.5)'}}>
-                                <a className="p-4" style={{cursor:'default'}}>
-                                    <img src="https://lh3.googleusercontent.com/ogw/AGvuzYZ34XlgfVEaMPD5Q2Fy8BZi7QaG_M2svTU-OKWQx6A=s32-c-mo" id="AaroophanIMG" height="150px" width="150px" className="rounded-5 p-4" />
-                                </a>
-                                <a className="nav-link p-2 mx-3" onClick={HomePageCall} style={{ cursor:'default' }}>Home</a>
-                                <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}>Name</a>
-                                <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}>Profile</a>
-                                <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}>Logout</a>
-                                <a className="nav-link p-2 mx-3" onClick={MoviePageCall} style={{ cursor:'default' }}><i className="bi bi-view-list"></i></a>
-                                <a className="nav-link p-2 mx-3" onClick={MoviePageCall} style={{ cursor:'default' }}><i className="bi bi-brightness-high"></i></a>
+                        <div className="collapse p-2" id="navbarNav2"  style={{  cursor:'default' }}>
+                            <div className="rounded-3" style={{ background: 'rgba(0, 0, 10, 0.8)'}}>
+                                <br/>
+                                {LoggedIn ? 
+                                    <div>
+                                        <a className="p-4" style={{cursor:'default'}}>
+                                            <img src="https://lh3.googleusercontent.com/ogw/AGvuzYZ34XlgfVEaMPD5Q2Fy8BZi7QaG_M2svTU-OKWQx6A=s32-c-mo" id="AaroophanIMG" height="150px" width="150px" className="rounded-5 p-4" />
+                                        </a>
+                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-person-square"></i> Profile</a>
+                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-chat-left-dots"></i> Notifications</a>
+                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-check2-square"></i> Watched</a>
+                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<Whole LoggedIn={false} Theme={Theme} /> , document.getElementById("HeaderHere"));}} style={{ cursor:'default' }}>
+                                            <i class="bi bi-box-arrow-right"></i> Log Out
+                                        </a>
+                                    </div>
+                                : 
+                                    <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<Whole LoggedIn={true} Theme={Theme} /> , document.getElementById("HeaderHere"));}} style={{ cursor:'default' }}>
+                                        <i class="bi bi-box-arrow-in-right"></i> Log In
+                                    </a>
+                                }
+                                {Theme ? 
+                                    <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<Whole LoggedIn={LoggedIn} Theme={false} /> , document.getElementById("HeaderHere"));}} style={{ cursor:'default' }}>
+                                        <i className="bi bi-brightness-high"></i> Light
+                                    </a>
+                                :
+                                    <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<Whole LoggedIn={LoggedIn} Theme={true} /> , document.getElementById("HeaderHere"));}} style={{ cursor:'default' }}>
+                                        <i className="bi bi-moon"></i> Dark
+                                    </a>
+                                }
                                 <br/>
                             </div>
                             <br/>
@@ -326,19 +298,16 @@
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <div className=" input-group mx-3">
-                                <i class="nav-link bi bi-house p-2 "></i>
-                                <a className="nav-link p-2 mx-3" onClick={HomePageCall} style={{ cursor:'default' }}>Home</a>
-                            </div>
+                            <a className="nav-link p-2 mx-3" onClick={HomePageCall} style={{ cursor:'default' }}><i class="bi bi-house"></i> Home</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}>Movies</a>
+                            <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-film"></i> Movies</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}>Series</a>
+                            <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-tv"></i> Series</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}>Anime</a>
+                            <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-sunglasses"></i> Anime</a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link p-2 mx-3" style={{ cursor:'default', color:'rgba(210, 230, 250, 0.02)' }}>Aaroophan-3D2Y-Genin</a>
@@ -350,7 +319,7 @@
                             </div>
                         </li>
                         <li className="nav-item">
-                            <UserDetails/>
+                            <UserDetails />
                         </li>
                     </ul>
                 </div>
@@ -360,11 +329,14 @@
         }
         ReactDOM.render(<Header /> , document.getElementById("HeaderHere"));
 
+    return (null)
+    }
+
+        ReactDOM.render(<Whole LoggedIn={LoggedIn} Theme={Theme} /> , document.getElementById("HeaderHere"));
         </script>
 
     <style>
         body {
-            background: linear-gradient(to top, #003475 0%, #EDF5FF 100%);
             font-family: Segoe, 'Segoe UI', 'DejaVu Sans', 'Trebuchet MS', Verdana, 'sans-serif'
         }
 
@@ -433,7 +405,6 @@
 
 
     <div>
-
         <div class="modal modal-xl fade my-4 text-white" id="MP" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="tue">
             <div class="modal-dialog my-4 text-white">
                 <div class="modal-content my-4 text-white" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, #2c2c2c 100%); border: none;">
@@ -451,7 +422,7 @@
                                 <div class="card-body" style="border: none;">
                                     <p class="card-text" style="cursor:default;" id="project-desc"></p><br>
                                     <p class="card-text fs-6 mb-2" id="project-date"><small></small></p><br>
-                                    <a id="project-link2" href="#" class="btn btn-outline-light btn-lg px-3" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Visit Site</a><br><br>
+                                    <a id="project-link2" href="#" class="btn btn-outline-light btn-lg px-3" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">More</a><br><br>
                                 </div>
                             </a>
                         </div>
