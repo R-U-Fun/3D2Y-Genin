@@ -121,9 +121,14 @@
         TitleWords = ImgTitle.split('__');
         ImgTitle = TitleWords.join("");
         console.log(ImgTitle);
+        let TitleWords2 = (Title+" "+Year).split(" ");
+        let GoogleTitle = TitleWords2.join("+").toLowerCase();
+        TitleWords2 = GoogleTitle.split('++');
+        GoogleTitle = TitleWords2.join("");
+        console.log(GoogleTitle);
         return(
             <div className="card text-white rounded-4" id="box" style={{ border: 'none'}}>
-                <a className='rounded-4' style={{ textDecoration: 'none', color: 'white', background: 'rgba(0, 33, 74, 0.9)', border: 'none'}} role="button" data-bs-toggle="modal" data-bs-target="#MP" data-bs-title={Title} data-bs-desc="Description" data-bs-date="Nov 2022 - Dec 2022" data-bs-img={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} data-bs-link="http://baratiebakery-asv.stackstaging.com">
+                <a className='rounded-4' style={{ textDecoration: 'none', color: 'white', background: 'rgba(0, 33, 74, 0.9)', border: 'none'}} role="button" data-bs-toggle="modal" data-bs-target="#MP" data-bs-title={Title} data-bs-desc="Description" data-bs-date="Nov 2022 - Dec 2022" data-bs-img={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} data-bs-link={`https://www.google.com/search?q=${GoogleTitle}`}>
                     <img src={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} className="card-img-top rounded-4" alt={`${Title}`} style={{ border: 'none'}} />
                     <div className="card-body" style={{ border: 'none' }}>
                         <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)'}}>{Title}</h5>
@@ -367,7 +372,7 @@
 
     <div>
 
-        <div class="modal modal-xl fade my-4 text-white" id="MP" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal modal-xl fade my-4 text-white" id="MP" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="tue">
             <div class="modal-dialog my-4 text-white">
                 <div class="modal-content my-4 text-white" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, #2c2c2c 100%); border: none;">
                     <div class="modal-header" style="border: none;">
