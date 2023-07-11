@@ -133,6 +133,11 @@
                         {MovieList}
                     </div>
                 </div>
+                <br/>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <a className="p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default', fontSize: '100px'}}><i class="bi bi-caret-left"></i></a>
+                <a className="p-2 mx-3" onClick={function Call(){let Page = "?page=2"; ReactDOM.render(<MoviePageCall Linke={`https://yts.mx/browse-movies/0/all/all/8/downloads/0/all${Page}`} /> , document.getElementById("AppHere")); console.log(`https://yts.mx/browse-movies/0/all/all/8/downloads/0/all${Page}`)}} style={{ cursor:'default', fontSize: '100px' }}><i class="bi bi-caret-right"></i></a>
+                </div>
             </div>
         );
     }
@@ -244,7 +249,7 @@
             return(
                     <div style={{ background: 'rgba(0, 0, 0, 0)', cursor:'default' }}>
                         <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav2" aria-controls="navbarNav2" aria-expanded="true" aria-label="Toggle" className="nav-link p-2 mx-3" style={{ background: 'rgba(0, 0, 0, 0)', cursor:'default' }}>
-                            <i className="bi bi-person"></i>
+                            <i className="bi bi-person"></i> {LoggedIn ? "Aaroophan" : "Log In"}
                         </button>
                         <div className="collapse p-2" id="navbarNav2"  style={{  cursor:'default' }}>
                             <div className="rounded-3" style={{ background: 'rgba(0, 0, 10, 0.8)'}}>
