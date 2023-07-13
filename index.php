@@ -27,7 +27,7 @@
 
     <script type="text/babel">
 
-    function Whole(propsWhole){
+        function Whole(propsWhole){
 
         if (propsWhole.Theme) {
             document.body.style.background = 'linear-gradient(to top, #003475 0%, #EDF5FF 100%)';
@@ -78,8 +78,8 @@
                         <div className="container my-4 text-center">
                             <div className="row col-lg-12 col-xs-1 gx-3 text-center">
                                 <HomeObjs Name='Movies' Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='film' />
-                                <HomeObjs Name='Series' Linke={MoviePageCall} Icone='tv' />
-                                <HomeObjs Name='Anime'  Linke={MoviePageCall} Icone='sunglasses' />
+                                <HomeObjs Name='Series' Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='tv' />
+                                <HomeObjs Name='Anime'  Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='sunglasses' />
                             </div>
                         </div>
                     </div>
@@ -87,9 +87,10 @@
             }
             function HomePageCall(){
                 ReactDOM.render(<HomePage/> , document.getElementById("AppHere"));
+                return null;
             }
             
-            window.onload = HomePageCall;
+            ReactDOM.render(<HomePageCall/> , document.getElementById("AppHere"));
 
 
     function MovieBoxes(props){
@@ -108,7 +109,7 @@
         return(
             <div className="card text-white rounded-4" id="box" style={{ border: 'none'}}>
                 <a className='rounded-4' style={{ textDecoration: 'none', color: 'white', background: 'rgba(0, 33, 74, 0.9)', border: 'none'}} role="button" data-bs-toggle="modal" data-bs-target="#MP" data-bs-title={props.Title} data-bs-desc={`${props.Desc}`} data-bs-date={`${props.Year}`} data-bs-img={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} data-bs-link={`https://www.google.com/search?q=${GoogleTitle}`}>
-                {W2 ? <i class="bi bi-check-circle-fill fs-1" style={{ position: 'absolute', top: '10px', left: '10px' , color:'rgba(54, 255, 60, 0.9)'}}></i> : null}
+                {W2 && propsWhole.LoggedIn === true ? <i class="bi bi-check-circle-fill fs-1" style={{ position: 'absolute', top: '10px', left: '10px' , color:'rgba(54, 255, 60, 0.9)'}}></i> : null}
                     <img src={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} className="card-img-top rounded-4" alt={`${props.Title}`} style={{ border: 'none'}} />
                     <div className="card-body" style={{ border: 'none' }}>
                         <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)'}}>{props.Title}</h5>
@@ -217,6 +218,41 @@
 
         }
 
+            function UserObjs(props){
+                return(
+                    <div className="col-sm-4 col-lg-2 rounded-4" id="box" onClick={props.Linke}>
+                        <div className="card my-4 text-white" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none'}}>
+                            <h1 style={{ fontsize: '60px', color: '#003475'}}><i className={`bi bi-${props.Icone}`}></i></h1>
+                            <div className="card-body" style={{ background: 'rgba(0, 0, 0, 0)', border: 'none' }}>
+                                <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: '#003475'}}>{props.Name}</h5>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            function UserPage(){
+                return(
+                    <div>
+                        <div id="HomeName"><a><b>Aaroophan</b></a></div>
+                        
+                        <div className="container my-4 text-center"> 
+                            <div className="row col-lg-12 col-xs-1 gx-3 text-center">
+                                <UserObjs Name='Account' Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='person-square' />
+                                <UserObjs Name='Home' Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='house' />
+                                <UserObjs Name='Notification'  Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='chat-left-dots' />
+                                <UserObjs Name='Watch List'  Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='list-task' />
+                                <UserObjs Name='Watched'  Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='check2-square' />
+                                <UserObjs Name='Log Out'  Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='box-arrow-right' />
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+            function UserPageCall(){
+                ReactDOM.render(<UserPage/> , document.getElementById("AppHere"));
+                return null;
+            }
+
 
         function Footer(){
         return(
@@ -252,29 +288,29 @@
                         <div className="collapse p-2" id="navbarNav2"  style={{  cursor:'default' }}>
                             <div className="rounded-3" style={{ background: 'rgba(0, 0, 10, 0.8)'}}>
                                 <br/>
-                                {propsWhole.LoggedIn ? 
+                                {propsWhole.LoggedIn ?
                                     <div>
                                         <a className="p-4" style={{cursor:'default'}}>
                                             <img src="https://lh3.googleusercontent.com/ogw/AGvuzYZ34XlgfVEaMPD5Q2Fy8BZi7QaG_M2svTU-OKWQx6A=s32-c-mo" id="AaroophanIMG" height="150px" width="150px" className="rounded-5 p-4" />
                                         </a>
-                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-person-square"></i> Profile</a>
-                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-chat-left-dots"></i> Notifications</a>
-                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-check2-square"></i> Watched</a>
-                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<Whole LoggedIn={false} Theme={propsWhole.Theme} /> , document.getElementById("HeaderHere"));}} style={{ cursor:'default' }}>
+                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<UserPageCall /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-person-square"></i> Profile</a>
+                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<UserPageCall /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-chat-left-dots"></i> Notifications</a>
+                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<UserPageCall /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-list-task"></i> Watch List</a>
+                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<Whole LoggedIn={false} Theme={propsWhole.Theme} /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}>
                                             <i class="bi bi-box-arrow-right"></i> Log Out
                                         </a>
                                     </div>
                                 : 
-                                    <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<Whole LoggedIn={true} Theme={propsWhole.Theme} /> , document.getElementById("HeaderHere"));}} style={{ cursor:'default' }}>
+                                    <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<Whole LoggedIn={true} Theme={propsWhole.Theme} /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}>
                                         <i class="bi bi-box-arrow-in-right"></i> Log In
                                     </a>
                                 }
                                 {propsWhole.Theme ? 
-                                    <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<Whole LoggedIn={propsWhole.LoggedIn} Theme={false} /> , document.getElementById("HeaderHere"));}} style={{ cursor:'default' }}>
+                                    <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<Whole LoggedIn={propsWhole.LoggedIn} Theme={false} /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}>
                                         <i className="bi bi-brightness-high"></i> Light
                                     </a>
                                 :
-                                    <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<Whole LoggedIn={propsWhole.LoggedIn} Theme={true} /> , document.getElementById("HeaderHere"));}} style={{ cursor:'default' }}>
+                                    <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<Whole LoggedIn={propsWhole.LoggedIn} Theme={true} /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}>
                                         <i className="bi bi-moon"></i> Dark
                                     </a>
                                 }
@@ -335,7 +371,7 @@
     return (null)
     }
 
-    ReactDOM.render(<Whole LoggedIn={false} Theme={true} /> , document.getElementById("HeaderHere"));
+    ReactDOM.render(<Whole LoggedIn={false} Theme={true} /> , document.getElementById("AppHere"));
 </script>
 
 
@@ -416,7 +452,7 @@
                         <div style="cursor:default; text-align: center">
                             <h5 class="card-title fs-3" style="cursor:default; text-align: center" id="project-name"></h5>
                         </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg bg-white" style="border-radius: 50px;"></i></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body text-white">
                         <div class="card text-white" style="background-color: rgba(0, 0, 0, 0); border: none; text-align: center;">
@@ -468,6 +504,7 @@
         </script>
 
     </div>
+
 
 </body>
 
