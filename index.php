@@ -24,15 +24,103 @@
 </head>
 
 <body>
+    <?php
+
+    $con = mysqli_connect("localhost", "root", "", "movielist", "3306");
+
+    if (!$con) {
+        die("Sorry, We are facing technical issue.");
+    }
+
+    $email = "aarophn@gmail.com";
+
+    mysqli_select_db($con, "movielist");
+
+    $sql = "SELECT * FROM `tblusers` WHERE `Email` = '" . $email . "'";
+
+    $result = mysqli_query($con, $sql);
+
+    $row = mysqli_fetch_assoc($result);
+
+    if (mysqli_num_rows($result) > 0) {
+        $LoggedIn = true;
+        $Name = $row["Username"];
+        $Email = $row["Email"];
+        $Phone = $row["Phone"];
+        $UserImage = $row["UserImage"];
+        $MovieWatched = $row["MovieWatched"];
+        $ToBeListMovie = $row["ToBeListMovie"];
+        $AnimeWatched = $row["AnimeWatched"];
+        $ToBeListAnime = $row["ToBeListAnime"];
+        $SeriesWatched = $row["SeriesWatched"];
+        $ToBeListSeries = $row["ToBeListSeries"];
+        $Theme = $row["Theme"];
+        $Notifications = $row["Notifications"];
+    } else {
+        $LoggedIn = false;
+        $Name = null;
+        $Email = null;
+        $Phone = null;
+        $UserImage = null;
+        $MovieWatched = null;
+        $ToBeListMovie = null;
+        $AnimeWatched = null;
+        $ToBeListAnime = null;
+        $SeriesWatched = null;
+        $ToBeListSeries = null;
+        $Theme = 0;
+        $Notifications = null;
+    }
+
+
+    ?>
 
     <script type="text/babel">
 
         function Whole(propsWhole){
 
-        if (propsWhole.Theme) {
+            console.log(propsWhole.LoggedIn);
+            console.log(propsWhole.Name);
+            console.log(propsWhole.Email); 
+            console.log(propsWhole.Phone);
+            console.log(propsWhole.UserImage);
+            console.log(propsWhole.MovieWatched);
+            console.log(propsWhole.ToBeListMovie);
+            console.log(propsWhole.AnimeWatched);
+            console.log(propsWhole.ToBeListAnime);
+            console.log(propsWhole.SeriesWatched);
+            console.log(propsWhole.ToBeListSeries);
+            console.log(propsWhole.Theme);
+            console.log(propsWhole.Notifications);
+
+
+        if (propsWhole.Theme === 0) {
             document.body.style.background = 'linear-gradient(to top, #003475 0%, #EDF5FF 100%)';
         } else {
             document.body.style.background = 'linear-gradient(to top, #003475 0%, #000000 100%)';
+        }
+
+
+        function UserDetails(propsUser){
+
+            if(propsUser.What === "Name"){
+                return (<?php echo json_encode($Name); ?>);
+            }
+            else if(propsUser.What === "Email"){
+                return (<?php echo json_encode($Email); ?>);
+            }
+            else if(propsUser.What === "Phone"){
+                return (<?php echo json_encode($Phone); ?>);
+            }
+            else if(propsUser.What === "UserImage"){
+                return (<?php echo json_encode($UserImage); ?>);
+            }
+            else if(propsUser.What === "MovieWatched"){
+                return (<?php echo json_encode($MovieWatched); ?>);
+            }
+            else{
+                return (null);
+            }
         }
         
 
@@ -98,12 +186,10 @@
         let ImgTitle = TitleWords.join("_").toLowerCase();
         TitleWords = ImgTitle.split('__');
         ImgTitle = TitleWords.join("");
-        console.log(ImgTitle);
         let TitleWords2 = (props.Title+" "+props.Year).split(" ");
         let GoogleTitle = TitleWords2.join("+").toLowerCase();
         TitleWords2 = GoogleTitle.split('++');
         GoogleTitle = TitleWords2.join("");
-        console.log(GoogleTitle);
         let W2, W=(props.Year % 2);
         (W === 1 ? W2 = true : W2 = false);
         return(
@@ -135,7 +221,7 @@
                 <br/>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <a className="p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default', fontSize: '100px'}}><i class="bi bi-caret-left"></i></a>
-                <a className="p-2 mx-3" onClick={function Call(){let Page = "?page=2"; ReactDOM.render(<MoviePageCall Linke={`https://yts.mx/browse-movies/0/all/all/8/downloads/0/all${Page}`} /> , document.getElementById("AppHere")); console.log(`https://yts.mx/browse-movies/0/all/all/8/downloads/0/all${Page}`)}} style={{ cursor:'default', fontSize: '100px' }}><i class="bi bi-caret-right"></i></a>
+                <a className="p-2 mx-3" onClick={function Call(){let Page = "?page=2"; ReactDOM.render(<MoviePageCall Linke={`https://yts.mx/browse-movies/0/all/all/8/downloads/0/all${Page}`} /> , document.getElementById("AppHere"));}} style={{ cursor:'default', fontSize: '100px' }}><i class="bi bi-caret-right"></i></a>
                 </div>
             </div>
         );
@@ -187,7 +273,6 @@
                             let myData2 = element2;
                             let element3 = myData2.querySelector('p');
                             let myData3 = element3.textContent;
-                            console.log(myData3);
 
                             ReactDOM.render(<MovieBoxes Title={Title} Year={Year[0]} Desc={myData3} /> , document.getElementById("Movie"+i));
                             
@@ -212,8 +297,6 @@
                 Link = `https://yts.mx/browse-movies/${JoinTitle}/all/all/0/rating/0/all`;
             }
 
-            console.log(Link);
-
             ReactDOM.render(<MoviePageCall Linke={Link} /> , document.getElementById("AppHere"));
 
         }
@@ -233,16 +316,16 @@
             function UserPage(){
                 return(
                     <div>
-                        <div id="HomeName"><a><b>Aaroophan</b></a></div>
+                        <div id="HomeName"><a><b>{propsWhole.Name}</b></a></div>
                         
                         <div className="container my-4 text-center"> 
                             <div className="row col-lg-12 col-xs-1 gx-3 text-center">
                                 <UserObjs Name='Account' Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='person-square' />
                                 <UserObjs Name='Home' Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='house' />
-                                <UserObjs Name='Notification'  Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='chat-left-dots' />
-                                <UserObjs Name='Watch List'  Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='list-task' />
-                                <UserObjs Name='Watched'  Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='check2-square' />
-                                <UserObjs Name='Log Out'  Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='box-arrow-right' />
+                                <UserObjs Name='Notification' Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='chat-left-dots' />
+                                <UserObjs Name='Watch List' Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='list-task' />
+                                <UserObjs Name='Watched' Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='check2-square' />
+                                <UserObjs Name='Log Out' Linke={function Call(){ReactDOM.render(<Whole LoggedIn={false} Theme={propsWhole.Theme} /> , document.getElementById("AppHere"));}} Icone='box-arrow-right' />
                             </div>
                         </div>
                     </div>
@@ -279,11 +362,11 @@
         
         //position: 'absolute', top: '65px', left: '1080px' ,
 
-        function UserDetails(){
+        function HeaderUser(){
             return(
                     <div style={{ background: 'rgba(0, 0, 0, 0)', cursor:'default' }}>
                         <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav2" aria-controls="navbarNav2" aria-expanded="true" aria-label="Toggle" className="nav-link p-2 mx-3" style={{ background: 'rgba(0, 0, 0, 0)', cursor:'default' }}>
-                            <i className="bi bi-person"></i> {propsWhole.LoggedIn ? "Aaroophan" : "Log In"}
+                            <i className="bi bi-person"></i> {propsWhole.LoggedIn ? propsWhole.Name : "Log In"}
                         </button>
                         <div className="collapse p-2" id="navbarNav2"  style={{  cursor:'default' }}>
                             <div className="rounded-3" style={{ background: 'rgba(0, 0, 10, 0.8)'}}>
@@ -291,7 +374,7 @@
                                 {propsWhole.LoggedIn ?
                                     <div>
                                         <a className="p-4" style={{cursor:'default'}}>
-                                            <img src="https://lh3.googleusercontent.com/ogw/AGvuzYZ34XlgfVEaMPD5Q2Fy8BZi7QaG_M2svTU-OKWQx6A=s32-c-mo" id="AaroophanIMG" height="150px" width="150px" className="rounded-5 p-4" />
+                                            <img src={propsWhole.UserImage} id="AaroophanIMG" height="150px" width="150px" className="rounded-5 p-4" alt={propsWhole.Name} />
                                         </a>
                                         <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<UserPageCall /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-person-square"></i> Profile</a>
                                         <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<UserPageCall /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-chat-left-dots"></i> Notifications</a>
@@ -358,7 +441,7 @@
                             </div>
                         </li>
                         <li className="nav-item">
-                            <UserDetails />
+                            <HeaderUser />
                         </li>
                     </ul>
                 </div>
@@ -371,7 +454,23 @@
     return (null)
     }
 
-    ReactDOM.render(<Whole LoggedIn={false} Theme={true} /> , document.getElementById("AppHere"));
+    ReactDOM.render(
+        <Whole 
+            LoggedIn={<?php echo json_encode($LoggedIn); ?>} 
+            Name={<?php echo json_encode($Name); ?>} 
+            Email={<?php echo json_encode($Email); ?>} 
+            Phone={<?php echo json_encode($Phone); ?>} 
+            UserImage={<?php echo json_encode($UserImage); ?>} 
+            MovieWatched={<?php echo json_encode($MovieWatched); ?>} 
+            ToBeListMovie={<?php echo json_encode($ToBeListMovie); ?>} 
+            AnimeWatched={<?php echo json_encode($AnimeWatched); ?>} 
+            ToBeListAnime={<?php echo json_encode($ToBeListAnime); ?>} 
+            SeriesWatched={<?php echo json_encode($SeriesWatched); ?>} 
+            ToBeListSeries={<?php echo json_encode($ToBeListSeries); ?>} 
+            Theme={<?php echo json_encode($Theme); ?>} 
+            Notifications={<?php echo json_encode($Notifications); ?>} 
+        /> 
+    , document.getElementById("AppHere"));
 </script>
 
 
