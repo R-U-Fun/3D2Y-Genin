@@ -49,7 +49,7 @@
             die("Sorry, We are facing technical issue.");
         }
 
-        mysqli_select_db($con, "movielist");
+        //mysqli_select_db($con, "movielist");
 
         $sql = "SELECT * FROM `tblusers` WHERE `Email` = '" . $email . "'";
 
@@ -57,67 +57,76 @@
 
         $row = mysqli_fetch_assoc($result);
 
+        $What2 = $What;
+
         if (mysqli_num_rows($result) > 0) {
-            if ($What = "Name") {
+            if ($What == "Username") {
                 return $row["Username"];
-            } else if ($What = "Email") {
+            } else if ($What == "Email") {
                 return $row["Email"];
-            } else if ($What = "Phone") {
+            } else if ($What == "Phone") {
                 return $row["Phone"];
-            } else if ($What = "UserImage") {
+            } else if ($What == "UserImage") {
                 return $row["UserImage"];
-            } else if ($What = "MovieWatched") {
+            } else if ($What == "MovieWatched") {
                 return $row["MovieWatched"];
-            } else if ($What = "ToBeListMovie") {
+            } else if ($What == "ToBeListMovie") {
                 return $row["ToBeListMovie"];
-            } else if ($What = "AnimeWatched") {
+            } else if ($What == "AnimeWatched") {
                 return $row["AnimeWatched"];
-            } else if ($What = "ToBeListAnime") {
+            } else if ($What == "ToBeListAnime") {
                 return $row["ToBeListAnime"];
-            } else if ($What = "SeriesWatched") {
+            } else if ($What == "SeriesWatched") {
                 return $row["SeriesWatched"];
-            } else if ($What = "ToBeListSeries") {
+            } else if ($What == "ToBeListSeries") {
                 return $row["ToBeListSeries"];
-            } else if ($What = "Theme") {
+            } else if ($What == "Theme") {
                 return $row["Theme"];
-            } else if ($What = "Notifications") {
+            } else if ($What == "Notifications") {
                 return $row["Notifications"];
-            } else if ($What = "LoggedIn") {
+            } else if ($What == "LoggedIn") {
                 return true;
+            } else if ($What == "row") {
+                return $row;
             } else null;
         } else {
-            if ($What = "Name") {
+            if ($What == "Username") {
                 return null;
-            } else if ($What = "Email") {
+            } else if ($What == "Email") {
                 return null;
-            } else if ($What = "Phone") {
+            } else if ($What == "Phone") {
                 return null;
-            } else if ($What = "UserImage") {
+            } else if ($What == "UserImage") {
                 return null;
-            } else if ($What = "MovieWatched") {
+            } else if ($What == "MovieWatched") {
                 return null;
-            } else if ($What = "ToBeListMovie") {
+            } else if ($What == "ToBeListMovie") {
                 return null;
-            } else if ($What = "AnimeWatched") {
+            } else if ($What == "AnimeWatched") {
                 return null;
-            } else if ($What = "ToBeListAnime") {
+            } else if ($What == "ToBeListAnime") {
                 return null;
-            } else if ($What = "SeriesWatched") {
+            } else if ($What == "SeriesWatched") {
                 return null;
-            } else if ($What = "ToBeListSeries") {
+            } else if ($What == "ToBeListSeries") {
                 return null;
-            } else if ($What = "Theme") {
+            } else if ($What == "Theme") {
                 return 0;
-            } else if ($What = "Notifications") {
+            } else if ($What == "Notifications") {
                 return null;
-            } else if ($What = "LoggedIn") {
+            } else if ($What == "LoggedIn") {
                 return false;
             } else null;
         }
 
         return null;
     }
-    $LogMail = "arophn@gmail.com"
+
+    //$LogMail = "arophn@gmail.com";
+    $LogMail = null;
+    if (isset($_POST["LogButton"])) {
+        $LogMail = $_POST["LogMail"];
+    }
     ?>
 
     <script type="text/babel">
@@ -144,31 +153,6 @@
         } else {
             document.body.style.background = 'linear-gradient(to top, #003475 0%, #000000 100%)';
         }
-
-                console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX    " + <?php echo json_encode(UserD("arophn@gmail.com", "Name")); ?>);
-
-        function UserDetails(propsUser){
-
-            if(propsUser.What === "Name"){
-                return (<?php echo json_encode(UserD("arophn@gmail.com", "Name")); ?>);
-            }
-            else if(propsUser.What === "Email"){
-                return (<?php echo json_encode($Email); ?>);
-            }
-            else if(propsUser.What === "Phone"){
-                return (<?php echo json_encode($Phone); ?>);
-            }
-            else if(propsUser.What === "UserImage"){
-                return (<?php echo json_encode($UserImage); ?>);
-            }
-            else if(propsUser.What === "MovieWatched"){
-                return (<?php echo json_encode($MovieWatched); ?>);
-            }
-            else{
-                return (null);
-            }
-        }
-        
 
         function Secret(){
                 return(
@@ -437,18 +421,18 @@
                                                 ToBeListAnime={null}
                                                 SeriesWatched={null}
                                                 ToBeListSeries={null}
-                                                Theme={propsWhole.Theme}
+                                                Theme={0}
                                                 Notifications={null}
                                             /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}>
                                             <i class="bi bi-box-arrow-right"></i> Log Out
                                         </a>
                                     </div>
                                 : 
-                                    <a className="nav-link p-2 mx-3" onClick={function Call(){
-                                        ReactDOM.render(
+                                    <form>
+                                    <input className="nav-link form-control p-2 mx-3" type="search" placeholder="Email" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)' }} onChange={function Call(event){ReactDOM.render(
                                             <Whole 
                                                 LoggedIn={<?php echo json_encode(UserD($LogMail, "LoggedIn")); ?>}
-                                                Name={<?php echo json_encode(UserD($LogMail, "Name")); ?>}
+                                                Name={<?php echo json_encode(UserD($LogMail, "Username")); ?>}
                                                 Email={<?php echo json_encode(UserD($LogMail, "Email")); ?>}
                                                 Phone={<?php echo json_encode(UserD($LogMail, "Phone")); ?>}
                                                 UserImage={<?php echo json_encode(UserD($LogMail, "UserImage")); ?>}
@@ -460,9 +444,28 @@
                                                 ToBeListSeries={<?php echo json_encode(UserD($LogMail, "ToBeListSeries")); ?>}
                                                 Theme={<?php echo json_encode(UserD($LogMail, "Theme")); ?>}
                                                 Notifications={<?php echo json_encode(UserD($LogMail, "Notifications")); ?>}
+                                            /> , document.getElementById("AppHere"));}}
+                                    />
+                                    <button id="LogButton" type="submit" className="nav-link p-2 mx-3" onClick={function Call(){<?php $LogMail2 = "arophn@gmail.com"; ?>
+                                        ReactDOM.render(
+                                            <Whole 
+                                                LoggedIn={<?php echo json_encode(UserD($LogMail2, "LoggedIn")); ?>}
+                                                Name={<?php echo json_encode(UserD($LogMail2, "Username")); ?>}
+                                                Email={<?php echo json_encode(UserD($LogMail2, "Email")); ?>}
+                                                Phone={<?php echo json_encode(UserD($LogMail2, "Phone")); ?>}
+                                                UserImage={<?php echo json_encode(UserD($LogMail2, "UserImage")); ?>}
+                                                MovieWatched={<?php echo json_encode(UserD($LogMail2, "MovieWatched")); ?>}
+                                                ToBeListMovie={<?php echo json_encode(UserD($LogMail2, "ToBeListMovie")); ?>}
+                                                AnimeWatched={<?php echo json_encode(UserD($LogMail2, "AnimeWatched")); ?>}
+                                                ToBeListAnime={<?php echo json_encode(UserD($LogMail2, "ToBeListAnime")); ?>}
+                                                SeriesWatched={<?php echo json_encode(UserD($LogMail2, "SeriesWatched")); ?>}
+                                                ToBeListSeries={<?php echo json_encode(UserD($LogMail2, "ToBeListSeries")); ?>}
+                                                Theme={<?php echo json_encode(UserD($LogMail2, "Theme")); ?>}
+                                                Notifications={<?php echo json_encode(UserD($LogMail2, "Notifications")); ?>}
                                             /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}>
                                         <i class="bi bi-box-arrow-in-right"></i> Log In
-                                    </a>
+                                    </button>
+                                    </form>
                                 }
                                 {propsWhole.Theme === 0 ? 
                                     <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(
@@ -563,7 +566,7 @@
     ReactDOM.render(
         <Whole 
             LoggedIn={<?php echo json_encode(UserD($LogMail, "LoggedIn")); ?>}
-                                                Name={<?php echo json_encode(UserD($LogMail, "Name")); ?>}
+                                                Name={<?php echo json_encode(UserD($LogMail, "Username")); ?>}
                                                 Email={<?php echo json_encode(UserD($LogMail, "Email")); ?>}
                                                 Phone={<?php echo json_encode(UserD($LogMail, "Phone")); ?>}
                                                 UserImage={<?php echo json_encode(UserD($LogMail, "UserImage")); ?>}
