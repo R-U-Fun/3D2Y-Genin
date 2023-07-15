@@ -221,6 +221,126 @@
             
             ReactDOM.render(<HomePageCall/> , document.getElementById("AppHere"));
 
+    
+    function WatchedBoxes(props){
+        let TitleWords = (props.Title+"_"+props.Year).split(" ");
+        let ImgTitle = TitleWords.join("_").toLowerCase();
+        TitleWords = ImgTitle.split('__');
+        ImgTitle = TitleWords.join("");
+        let TitleWords2 = (props.Title+" "+props.Year).split(" ");
+        let GoogleTitle = TitleWords2.join("+").toLowerCase();
+        TitleWords2 = GoogleTitle.split('++');
+        GoogleTitle = TitleWords2.join("");
+        let W2, W=(props.Year % 2);
+        (W === 1 ? W2 = true : W2 = false);
+        return(
+            <div className="card text-white rounded-4" id="box" style={{ border: 'none'}}>
+                <a className='rounded-4' style={{ textDecoration: 'none', color: 'white', background: 'rgba(0, 33, 74, 0.9)', border: 'none'}} role="button" data-bs-toggle="modal" data-bs-target="#MP" data-bs-title={props.Title} data-bs-desc={`${props.Desc}`} data-bs-date={`${props.Year}`} data-bs-img={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} data-bs-link={`https://www.google.com/search?q=${GoogleTitle}`}>
+                <div id="WorN">
+                {propsWhole.LoggedIn === true ? 
+                    ( W2 ? 
+                        <i class="bi bi-check-circle-fill fs-1" style={{ position: 'absolute', top: '10px', left: '10px' , color:'rgba(54, 255, 60, 0.9)'}}></i> 
+                    : 
+                        <i class="bi bi-circle fs-1" style={{ position: 'absolute', top: '10px', left: '10px' , color:'rgba(54, 255, 60, 0.9)'}}></i>
+                    )
+                : 
+                    null
+                }
+                </div>
+                    <img src={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} className="card-img-top rounded-4" alt={`${props.Title}`} style={{ border: 'none'}} />
+                    <div className="card-body" style={{ border: 'none' }}>
+                        <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)'}}>{props.Title}</h5>
+                        <p className="card-text fs-6 mb-2" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)' }}><small>{props.Year}</small></p>
+                    </div>
+                </a>
+            </div>
+        );
+    }
+
+    function WatchedPage(props){
+        const WatchedList = [];
+        for (let i = 0; i < 20; i++) { WatchedList.push(<div key={i} className="col-sm-6 col-lg-3 p-3" id={`Watched${i}`} style={{ border: 'none'}}></div>);
+        }
+        return(
+            <div>
+                <div id="HomeName"><a contentEditable="true"><b>{props.What}</b>List</a></div>
+                <div className="container my-4 text-center">
+                    <div className="row col-lg-12 col-xs-1 gx-3 text-center">
+                        {WatchedList}
+                    </div>
+                </div>
+                <br/>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <a className="p-2 mx-3" onClick={function Call(){ReactDOM.render(<WatchedPageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default', fontSize: '100px'}}><i class="bi bi-caret-left"></i></a>
+                <a className="p-2 mx-3" onClick={function Call(){let Page = "?page=2"; ReactDOM.render(<WatchedPageCall Linke={`https://yts.mx/browse-movies/0/all/all/8/downloads/0/all${Page}`} /> , document.getElementById("AppHere"));}} style={{ cursor:'default', fontSize: '100px' }}><i class="bi bi-caret-right"></i></a>
+                </div>
+            </div>
+        );
+    }
+
+    function WatchedPageCall(props){
+
+            ReactDOM.render(<WatchedPage What={props.What}/> , document.getElementById("AppHere"));
+
+            let Each = props.ToBeSplit.split(', ');
+            
+            for(let i=0; i < Each.length; i++ ){
+                let TitleWords1 = Each[i].split(' ');
+                let TitleWords1Join = TitleWords1.join("-");
+
+            let href = `https://yts.mx/movies/${TitleWords1Join}`;
+            
+            console.log("LINK "+href);
+
+            fetch(href)
+                        .then(response => response.text())
+                        .then(data => {
+                            let parser = new DOMParser();
+                            let doc = parser.parseFromString(data, 'text/html');
+
+                            let element = doc.querySelector('#mobile-movie-info');
+                            let myData = element.textContent;
+                            let TitleYearGenre = myData.split('\n');
+                            let Year = TitleYearGenre[2].split(' ');
+                            let TitleWords = TitleYearGenre[1].split('.');
+                            let Title = TitleWords.join("");
+                                TitleWords = Title.split(':');
+                                Title = TitleWords.join("");
+                                TitleWords = Title.split('-');
+                                Title = TitleWords.join(" ");
+                                TitleWords = Title.split("'");
+                                Title = TitleWords.join("");
+                                TitleWords = Title.split("&");
+                                Title = TitleWords.join("");
+                                TitleWords = Title.split("#");
+                                Title = TitleWords.join("");
+                                TitleWords = Title.split(",");
+                                Title = TitleWords.join("");
+                                
+                            let element2 = doc.querySelector('#synopsis');
+                            let myData2 = element2;
+                            let element3 = myData2.querySelector('p');
+                            let myData3 = element3.textContent;
+
+                            ReactDOM.render(<WatchedBoxes Title={Title} Year={Year[0]} Desc={myData3} /> , document.getElementById("Watched"+i));
+                            
+                    });
+            }
+            return null;
+    }
+
+    function AlreadyWatchedMovie(){
+        let AllMovieWatched = <?php echo json_encode(UserD($LogMail, "MovieWatched")) ?>;
+        ReactDOM.render(<WatchedPageCall ToBeSplit={AllMovieWatched} What="Watched" /> , document.getElementById("AppHere"));
+        return null;
+    }
+    
+    function ToBeWatchedMovie(){
+        let AllMovieToBeWatched = <?php echo json_encode(UserD($LogMail, "ToBeListMovie")) ?>;
+        ReactDOM.render(<WatchedPageCall ToBeSplit={AllMovieToBeWatched} What="ToBe" /> , document.getElementById("AppHere"));
+        return null;
+    }
+
 
     function MovieBoxes(props){
         let TitleWords = (props.Title+"_"+props.Year).split(" ");
@@ -236,7 +356,17 @@
         return(
             <div className="card text-white rounded-4" id="box" style={{ border: 'none'}}>
                 <a className='rounded-4' style={{ textDecoration: 'none', color: 'white', background: 'rgba(0, 33, 74, 0.9)', border: 'none'}} role="button" data-bs-toggle="modal" data-bs-target="#MP" data-bs-title={props.Title} data-bs-desc={`${props.Desc}`} data-bs-date={`${props.Year}`} data-bs-img={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} data-bs-link={`https://www.google.com/search?q=${GoogleTitle}`}>
-                {W2 && propsWhole.LoggedIn === true ? <i class="bi bi-check-circle-fill fs-1" style={{ position: 'absolute', top: '10px', left: '10px' , color:'rgba(54, 255, 60, 0.9)'}}></i> : null}
+                <div id="WorN">
+                {propsWhole.LoggedIn === true ? 
+                    ( W2 ? 
+                        <i class="bi bi-check-circle-fill fs-1" style={{ position: 'absolute', top: '10px', left: '10px' , color:'rgba(54, 255, 60, 0.9)'}}></i> 
+                    : 
+                        <i class="bi bi-circle fs-1" style={{ position: 'absolute', top: '10px', left: '10px' , color:'rgba(54, 255, 60, 0.9)'}}></i>
+                    )
+                : 
+                    null
+                }
+                </div>
                     <img src={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} className="card-img-top rounded-4" alt={`${props.Title}`} style={{ border: 'none'}} />
                     <div className="card-body" style={{ border: 'none' }}>
                         <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)'}}>{props.Title}</h5>
@@ -361,11 +491,11 @@
                         
                         <div className="container my-4 text-center"> 
                             <div className="row col-lg-12 col-xs-1 gx-3 text-center">
-                                <UserObjs Name='Account' Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='person-square' />
-                                <UserObjs Name='Home' Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='house' />
-                                <UserObjs Name='Notification' Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='chat-left-dots' />
-                                <UserObjs Name='Watch List' Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='list-task' />
-                                <UserObjs Name='Watched' Linke={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all'/> , document.getElementById("AppHere"));}} Icone='check2-square' />
+                                <UserObjs Name='Account' Linke={function Call(){ReactDOM.render(<UserPage/> , document.getElementById("AppHere"));}} Icone='person-square' />
+                                <UserObjs Name='Home' Linke={function Call(){ReactDOM.render(<UserPage/> , document.getElementById("AppHere"));}} Icone='house' />
+                                <UserObjs Name='Notification' Linke={function Call(){ReactDOM.render(<UserPage/> , document.getElementById("AppHere"));}} Icone='chat-left-dots' />
+                                <UserObjs Name='Watch List' Linke={function Call(){ReactDOM.render(<ToBeWatchedMovie /> , document.getElementById("AppHere"));}} Icone='list-task' />
+                                <UserObjs Name='Watched' Linke={function Call(){ReactDOM.render(<AlreadyWatchedMovie  /> , document.getElementById("AppHere"));}} Icone='check2-square' />
                                 <UserObjs Name='Log Out' Linke={function Call(){ReactDOM.render(<Whole LoggedIn={false} Theme={propsWhole.Theme} /> , document.getElementById("AppHere"));}} Icone='box-arrow-right' />
                             </div>
                         </div>
