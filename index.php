@@ -138,11 +138,25 @@
             $LogMail = $row["Email"];
         }
     }
+    if (isset($_POST["SignButton"])) {
+
+        $con = mysqli_connect("localhost", "root", "", "movielist", "3306");
+
+        if (!$con) {
+            die("Sorry, We are facing technical issue.");
+        }
+
+        $sql = "INSERT INTO `tblusers` (`Email`, `Username`, `Password`, `Phone`, `UserImage`, `MovieWatched`, `ToBeListMovie`, `AnimeWatched`, `ToBeListAnime`, `SeriesWatched`, `ToBeListSeries`, `Theme`, `Notifications`) VALUES ('" . $_POST["SignMail"] . "', '" . $_POST["SignUsername"] . "', '" . $_POST["SignPassword"] . "', '', '', '', '', '', '', '', '', '0', '');";
+
+        mysqli_query($con, $sql);
+    }
     ?>
 
     <script type="text/babel">
 
         function Whole(propsWhole){
+
+            console.log(<?php echo json_encode($LogMail); ?>);
 
             console.log(propsWhole.LoggedIn);
             console.log(propsWhole.Name);
@@ -231,22 +245,9 @@
         let GoogleTitle = TitleWords2.join("+").toLowerCase();
         TitleWords2 = GoogleTitle.split('++');
         GoogleTitle = TitleWords2.join("");
-        let W2, W=(props.Year % 2);
-        (W === 1 ? W2 = true : W2 = false);
         return(
             <div className="card text-white rounded-4" id="box" style={{ border: 'none'}}>
                 <a className='rounded-4' style={{ textDecoration: 'none', color: 'white', background: 'rgba(0, 33, 74, 0.9)', border: 'none'}} role="button" data-bs-toggle="modal" data-bs-target="#MP" data-bs-title={props.Title} data-bs-desc={`${props.Desc}`} data-bs-date={`${props.Year}`} data-bs-img={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} data-bs-link={`https://www.google.com/search?q=${GoogleTitle}`}>
-                <div id="WorN">
-                {propsWhole.LoggedIn === true ? 
-                    ( W2 ? 
-                        <i class="bi bi-check-circle-fill fs-1" style={{ position: 'absolute', top: '10px', left: '10px' , color:'rgba(54, 255, 60, 0.9)'}}></i> 
-                    : 
-                        <i class="bi bi-circle fs-1" style={{ position: 'absolute', top: '10px', left: '10px' , color:'rgba(54, 255, 60, 0.9)'}}></i>
-                    )
-                : 
-                    null
-                }
-                </div>
                     <img src={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} className="card-img-top rounded-4" alt={`${props.Title}`} style={{ border: 'none'}} />
                     <div className="card-body" style={{ border: 'none' }}>
                         <h5 className="card-title fs-3 fw-bold" style={{ cursor:'default', color: 'rgba(210, 230, 250, 0.9)'}}>{props.Title}</h5>
@@ -271,8 +272,8 @@
                 </div>
                 <br/>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <a className="p-2 mx-3" onClick={function Call(){ReactDOM.render(<WatchedPageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default', fontSize: '100px'}}><i class="bi bi-caret-left"></i></a>
-                <a className="p-2 mx-3" onClick={function Call(){let Page = "?page=2"; ReactDOM.render(<WatchedPageCall Linke={`https://yts.mx/browse-movies/0/all/all/8/downloads/0/all${Page}`} /> , document.getElementById("AppHere"));}} style={{ cursor:'default', fontSize: '100px' }}><i class="bi bi-caret-right"></i></a>
+                <a className="p-2 mx-3" onClick={function Call(){ReactDOM.render(<WatchedPageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default', fontSize: '100px'}}><i className="bi bi-caret-left"></i></a>
+                <a className="p-2 mx-3" onClick={function Call(){let Page = "?page=2"; ReactDOM.render(<WatchedPageCall Linke={`https://yts.mx/browse-movies/0/all/all/8/downloads/0/all${Page}`} /> , document.getElementById("AppHere"));}} style={{ cursor:'default', fontSize: '100px' }}><i className="bi bi-caret-right"></i></a>
                 </div>
             </div>
         );
@@ -348,20 +349,49 @@
         TitleWords = ImgTitle.split('__');
         ImgTitle = TitleWords.join("");
         let TitleWords2 = (props.Title+" "+props.Year).split(" ");
+        let TitleWords3 = TitleWords2;
         let GoogleTitle = TitleWords2.join("+").toLowerCase();
         TitleWords2 = GoogleTitle.split('++');
         GoogleTitle = TitleWords2.join("");
-        let W2, W=(props.Year % 2);
-        (W === 1 ? W2 = true : W2 = false);
+
+        let W1=false, W2=false;
+
+        let CheckWatch = TitleWords3.join(" ").toLowerCase();
+        let AllMovieWatched = <?php echo json_encode(UserD($LogMail, "MovieWatched")) ?>;
+        let Each = AllMovieWatched.split(', ');
+        let AllMovieToBeWatched = <?php echo json_encode(UserD($LogMail, "ToBeListMovie")) ?>;
+        let Each2 = AllMovieToBeWatched.split(', ');
+            
+            for(let i=0; i < Each.length; i++ ){
+                
+                console.log("CheckWatch = "+CheckWatch);
+                console.log("Each["+i+"] = "+Each[i]);
+                if(CheckWatch === Each[i]){
+                    W2 = true;
+                }
+            }
+            for(let i=0; i < Each2.length; i++ ){
+                
+                console.log("CheckWatch = "+CheckWatch);
+                console.log("Each2["+i+"] = "+Each2[i]);
+                if(CheckWatch === Each2[i]){
+                    W1 = true;
+                }
+            }
+
         return(
             <div className="card text-white rounded-4" id="box" style={{ border: 'none'}}>
                 <a className='rounded-4' style={{ textDecoration: 'none', color: 'white', background: 'rgba(0, 33, 74, 0.9)', border: 'none'}} role="button" data-bs-toggle="modal" data-bs-target="#MP" data-bs-title={props.Title} data-bs-desc={`${props.Desc}`} data-bs-date={`${props.Year}`} data-bs-img={`https://img.yts.mx/assets/images/movies/${ImgTitle}/medium-cover.jpg`} data-bs-link={`https://www.google.com/search?q=${GoogleTitle}`}>
                 <div id="WorN">
                 {propsWhole.LoggedIn === true ? 
                     ( W2 ? 
-                        <i class="bi bi-check-circle-fill fs-1" style={{ position: 'absolute', top: '10px', left: '10px' , color:'rgba(54, 255, 60, 0.9)'}}></i> 
+                        <i className="bi bi-check-circle-fill fs-1" style={{ position: 'absolute', top: '10px', left: '10px' , color:'rgba(54, 255, 60, 0.9)'}}></i> 
                     : 
-                        <i class="bi bi-circle fs-1" style={{ position: 'absolute', top: '10px', left: '10px' , color:'rgba(54, 255, 60, 0.9)'}}></i>
+                        ( W1 ? 
+                            <i className="bi bi-hourglass-bottom fs-1" style={{ position: 'absolute', top: '10px', left: '10px' , color:'rgba(54, 255, 60, 0.9)'}}></i>
+                        : 
+                            null
+                        )
                     )
                 : 
                     null
@@ -391,8 +421,8 @@
                 </div>
                 <br/>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <a className="p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default', fontSize: '100px'}}><i class="bi bi-caret-left"></i></a>
-                <a className="p-2 mx-3" onClick={function Call(){let Page = "?page=2"; ReactDOM.render(<MoviePageCall Linke={`https://yts.mx/browse-movies/0/all/all/8/downloads/0/all${Page}`} /> , document.getElementById("AppHere"));}} style={{ cursor:'default', fontSize: '100px' }}><i class="bi bi-caret-right"></i></a>
+                <a className="p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default', fontSize: '100px'}}><i className="bi bi-caret-left"></i></a>
+                <a className="p-2 mx-3" onClick={function Call(){let Page = "?page=2"; ReactDOM.render(<MoviePageCall Linke={`https://yts.mx/browse-movies/0/all/all/8/downloads/0/all${Page}`} /> , document.getElementById("AppHere"));}} style={{ cursor:'default', fontSize: '100px' }}><i className="bi bi-caret-right"></i></a>
                 </div>
             </div>
         );
@@ -492,7 +522,7 @@
                         <div className="container my-4 text-center"> 
                             <div className="row col-lg-12 col-xs-1 gx-3 text-center">
                                 <UserObjs Name='Account' Linke={function Call(){ReactDOM.render(<UserPage/> , document.getElementById("AppHere"));}} Icone='person-square' />
-                                <UserObjs Name='Home' Linke={function Call(){ReactDOM.render(<UserPage/> , document.getElementById("AppHere"));}} Icone='house' />
+                                <UserObjs Name='Home' Linke={function Call(){ReactDOM.render(<HomePageCall/> , document.getElementById("AppHere"));}} Icone='house' />
                                 <UserObjs Name='Notification' Linke={function Call(){ReactDOM.render(<UserPage/> , document.getElementById("AppHere"));}} Icone='chat-left-dots' />
                                 <UserObjs Name='Watch List' Linke={function Call(){ReactDOM.render(<ToBeWatchedMovie /> , document.getElementById("AppHere"));}} Icone='list-task' />
                                 <UserObjs Name='Watched' Linke={function Call(){ReactDOM.render(<AlreadyWatchedMovie  /> , document.getElementById("AppHere"));}} Icone='check2-square' />
@@ -533,11 +563,61 @@
         
         //position: 'absolute', top: '65px', left: '1080px' ,
 
+        function checkPassword()
+		{
+			let pw = document.getElementById("txtPassword").value;
+			let cpw = document.getElementById("txtConfirmPassword").value;
+			if(pw != cpw)
+			{
+				alert("Confirm password should be the same as Password");
+				event.preventDefault();
+			}
+		}
+
+        function LogInForm(){
+            return(
+                <form action="index.php" method="POST">
+                    <input id="LogMail" name="LogMail" className="nav-link form-control" type="email" placeholder="Email" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)', width:'200px' }} />
+                    <label htmlfor="LogMail">arophn@gmail.com</label>
+                    <input id="LogPassword" name="LogPassword" className="nav-link form-control" type="password" placeholder="Password" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)', width:'200px' }} />
+                    <label htmlfor="LogPassword">MLAaroophan</label>
+                    <button id="LogButton"  name="LogButton" type="submit" className="nav-link" style={{ cursor:'default' }}>
+                        <i className="bi bi-box-arrow-in-right"></i> Log In
+                    </button>
+                </form>
+            );
+        }
+        function SignUpForm(){
+            return(
+                <form action="index.php" method="POST">
+                    <input id="SignMail" name="SignMail" className="nav-link form-control" type="email" placeholder="Email" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)', width:'200px' }} />
+                    <input id="SignUsername" name="SignUsername" className="nav-link form-control" type="text" placeholder="Username" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)', width:'200px' }} />
+                    <input id="SignPassword" name="SignPassword" className="nav-link form-control" type="password" placeholder="password" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)', width:'200px' }} />
+                    <input id="SignNewPassword" name="SignNewPassword" className="nav-link form-control" type="password" placeholder="Confirm Password" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)', width:'200px' }} />
+                    <button id="SignButton"  name="SignButton" type="submit" className="nav-link" style={{ cursor:'default' }}>
+                        <i className="bi bi-pen"></i> Sign Up
+                    </button>
+                </form>
+            );
+        }
+
         function HeaderUser(){
+            // fetch("https://www.facebook.com/")
+            //     .then(response => response.text())
+            //     .then(data => {
+            //         let parser = new DOMParser();
+            //         let doc = parser.parseFromString(data, 'text/html');
+
+            //         let element = doc.querySelector('.img cover rounded gray-border');
+            //         let myData = element.getAttribute('src');
+
+            //         console.log(myData);
+                            
+            // });
             return(
                     <div style={{ background: 'rgba(0, 0, 0, 0)', cursor:'default' }}>
                         <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav2" aria-controls="navbarNav2" aria-expanded="true" aria-label="Toggle" className="nav-link p-2 mx-3" style={{ background: 'rgba(0, 0, 0, 0)', cursor:'default' }}>
-                            <i className="bi bi-person"></i> {propsWhole.LoggedIn ? propsWhole.Name : "Log In"}
+                            <i className="bi bi-person"></i> {propsWhole.LoggedIn ? propsWhole.Name : <i className="bi bi-key"></i>}
                         </button>
                         <div className="collapse p-2" id="navbarNav2"  style={{  cursor:'default' }}>
                             <div className="rounded-3" style={{ background: 'rgba(0, 0, 10, 0.8)'}}>
@@ -547,21 +627,21 @@
                                         <a className="p-4" style={{cursor:'default'}}>
                                             <img src={propsWhole.UserImage} id="AaroophanIMG" height="150px" width="150px" className="rounded-5 p-4" alt={propsWhole.Name} />
                                         </a>
-                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<UserPageCall /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-person-square"></i> Profile</a>
-                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<UserPageCall /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-chat-left-dots"></i> Notifications</a>
-                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<UserPageCall /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-list-task"></i> Watch List</a>
+                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<UserPageCall /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i className="bi bi-person-square"></i> Profile</a>
+                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<UserPageCall /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i className="bi bi-chat-left-dots"></i> Notifications</a>
+                                        <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<ToBeWatchedMovie /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i className="bi bi-list-task"></i> Watch List</a>
                                         <a className="nav-link p-2 mx-3" href="index.php" style={{ cursor:'default' }}>
-                                            <i class="bi bi-box-arrow-right"></i> Log Out
+                                            <i className="bi bi-box-arrow-right"></i> Log Out
                                         </a>
                                     </div>
                                 : 
-                                    <form action="index.php" method="POST">
-                                        <input id="LogMail" name="LogMail" className="nav-link form-control p-2 mx-3" type="email" placeholder="Email" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)', width:'200px' }} value="arophn@gmail.com" />
-                                        <input id="LogPassword" name="LogPassword" className="nav-link form-control p-2 mx-3" type="password" placeholder="Password" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)', width:'200px' }} value="MLAaroophan"/>
-                                        <button id="LogButton"  name="LogButton" type="submit" className="nav-link p-2 mx-3" style={{ cursor:'default' }}>
-                                            <i class="bi bi-box-arrow-in-right"></i> Log In
-                                        </button>
-                                    </form>
+                                    <div className="nav-link p-2 mx-3">
+                                        <i className="bi bi-box-arrow-in-right" onClick={function Call(){ReactDOM.render(<LogInForm /> , document.getElementById("divSignUporLogIn"));}}> Log In </i>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <i className="bi bi-pen"                onClick={function Call(){ReactDOM.render(<SignUpForm /> , document.getElementById("divSignUporLogIn"));}}> Sign Up</i>
+                                    <hr/>
+                                    <div id="divSignUporLogIn"><LogInForm /></div>
+                                    </div>
                                 }
                                 {propsWhole.Theme === 0 ? 
                                     <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(
@@ -625,23 +705,23 @@
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <a className="nav-link p-2 mx-3" onClick={HomePageCall} style={{ cursor:'default' }}><i class="bi bi-house"></i> Home</a>
+                            <a className="nav-link p-2 mx-3" onClick={HomePageCall} style={{ cursor:'default' }}><i className="bi bi-house"></i> Home</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-film"></i> Movies</a>
+                            <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i className="bi bi-film"></i> Movies</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-tv"></i> Series</a>
+                            <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i className="bi bi-tv"></i> Series</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i class="bi bi-sunglasses"></i> Anime</a>
+                            <a className="nav-link p-2 mx-3" onClick={function Call(){ReactDOM.render(<MoviePageCall Linke='https://yts.mx/browse-movies/0/all/all/8/downloads/0/all' /> , document.getElementById("AppHere"));}} style={{ cursor:'default' }}><i className="bi bi-sunglasses"></i> Anime</a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link p-2 mx-3" style={{ cursor:'default', color:'rgba(210, 230, 250, 0.02)' }}>Aaroophan-3D2Y-Genin</a>
                         </li>
                         <li className="nav-item">
                             <div className=" input-group mx-3">
-                                <i class="nav-link bi bi-search p-2 "></i>
+                                <i className="nav-link bi bi-search p-2 "></i>
                                 <input id="SearchIco" className="nav-link form-control mx-3" type="search" placeholder="Search" style={{ cursor:'default', background:'rgba(210, 230, 250, 0)', border:'none', color:'rgba(210, 230, 250, 0.9)', width:'200px' }} onChange={function Call(event){ReactDOM.render(<SearchCall Title={event.target.value} /> , document.getElementById("AppHere"));}}/>
                             </div>
                         </li>
